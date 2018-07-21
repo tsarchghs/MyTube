@@ -7,6 +7,7 @@ urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('auth/', include("authentication.urls")),
 	path('channel/', include('channels.urls')),
+	path('video/',include('video.urls')),
 ]
 
 
