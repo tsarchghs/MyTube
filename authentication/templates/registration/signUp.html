@@ -1,0 +1,14 @@
+
+<div class="card">
+	<div class="card-image">
+		<img src="http://source.unsplash.com/L0K-87Ybwio/600x500">
+		<span class="card-title">Register</span>
+	</div>
+	<div class="card-content">
+		<form method="POST">
+			{% csrf_token %} {{ form.as_p }}
+			<button type="submit" class="waves-effect waves-light btn-large pink m-t-20" style="width:100%">Register</button>
+		</form>
+	</div>
+</div>
+

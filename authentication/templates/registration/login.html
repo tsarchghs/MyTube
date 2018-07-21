@@ -1,0 +1,12 @@
+
+		<div class="card">
+				<span class="card-title">Login</span>
+			<div class="card-content">
+				<form method="POST">
+					{% csrf_token %} {{ form.as_p }}
+					<button type="submit" class="waves-effect waves-light btn-large pink m-t-20" style="width:100%">Login</button>
+				</form>
+			</div>
+		</div>
+
+	
