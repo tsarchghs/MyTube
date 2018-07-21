@@ -8,3 +8,10 @@ class Video(models.Model):
 	video_file = models.FileField(upload_to="videos")
 	title = models.CharField(max_length=300)
 	description = models.TextField()
+
+class Like(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	video = models.ForeignKey(Video,on_delete=models.CASCADE)
+	like = models.BooleanField()
+	dislike = models.BooleanField()
+
