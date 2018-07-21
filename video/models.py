@@ -15,3 +15,13 @@ class Like(models.Model):
 	like = models.BooleanField()
 	dislike = models.BooleanField()
 
+class Comment(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	video = models.ForeignKey(Video,on_delete=models.CASCADE)
+	content = models.TextField()
+
+	def __str__(self):
+		if len(self.content) < 300:
+			return content
+		else:
+			return content[300:] + "..."
