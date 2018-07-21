@@ -4,7 +4,7 @@ from django.contrib.auth.models import User
 # Create your models here.
 
 class Video(models.Model):
-	channel = models.OneToOneField(Channel,on_delete=models.CASCADE)
+	channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 	video_file = models.FileField(upload_to="videos")
