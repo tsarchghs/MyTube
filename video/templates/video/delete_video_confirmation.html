@@ -1,0 +1,13 @@
+		<div class="card">
+				<span class="card-title">Delete video</span>
+			<div class="card-content">
+				
+				<form method="POST" action="{% url 'deleteVideo' video.id %}">
+					{% csrf_token %}
+					<h3>-->You sure bro'?</h3>
+					<h3>Yeah I'm sure</h3> 
+					<h4>I hereby confirm that I want to delete video id {{video.id}} from database</h4>
+					<button type="submit" class="waves-effect waves-light btn-large pink m-t-20" style="width:100%">Delete</button>
+				</form>
+			</div>
+		</div>
