@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+{% load static %}
+<html>
+<head>
+  <meta charset="UTF-8">
+  <title>MyTube</title>
+  <!-- import CSS -->
+  <link rel="stylesheet" href="https://unpkg.com/element-ui/lib/theme-chalk/index.css">
+  <link rel="stylesheet" href="{% static 'css/global.css' %}">
+  <link rel="stylesheet" href="{% static 'css/normalize.css' %}">
+</head>
+<body>
+  <div id="app">
+      {% include 'includes/nav.html' %}
+<el-row :gutter="10">
+  <el-col :xs="10" :sm="8" :md="6" :lg="5" :xl="3" style="height:200vh">
+ {% include 'includes/sidebar.html' %}
+  </el-col>
+  <el-col :xs="14" :sm="16" :md="18" :lg="19" :xl="21">
+ {% block content %} {% endblock content %}
+  </el-col>
+</el-row>
+
+      <br>
+          
+  </div>
+</body>
+  <!-- import Vue before Element -->
+  <script src="https://unpkg.com/vue/dist/vue.js"></script>
+  <!-- import JavaScript -->
+  <script src="https://unpkg.com/element-ui/lib/index.js"></script>
+     <script src="{% static 'js/internal.js' %}"></script>
+
+</html>

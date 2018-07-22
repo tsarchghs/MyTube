@@ -1,12 +1,32 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <meta http-equiv="X-UA-Compatible" content="ie=edge">
-    <title>Document</title>
-</head>
-<body>
-    Index Home
-</body>
-</html>
+{% extends 'base.html' %}
+
+
+{% block content %}
+<el-row :gutter="20">
+    {% for channel in channels %}
+        <el-col :span="6">
+            <el-card class="hover">
+                <div slot="header" class="clearfix">
+                    <span>{{ channel.name }}</span>
+                </div>
+                <div class="text item">
+                    {{ channel.description }}
+                </div>
+                <div class="bottom clearfix">
+                    <time class="time">{{ channel.created }}</time>
+                </div>
+            </el-card>
+        </el-col>
+    {% empty %}
+        <el-col :span="6">
+            <el-card shadow="always">
+                Oops! No Channel To show
+            </el-card>
+        <el-col :span="6">
+
+    {% endfor %}
+</el-row>
+    
+
+{% endblock content %}
+    
