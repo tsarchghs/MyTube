@@ -39,9 +39,22 @@ def editVideo(request,video_id):
 				video.save()
 				return redirect(reverse("editVideo",args=[video_id]))
 			else:
-				return render(request,"video/createVideo.html",{"form":form})
+				return render(request,"video/editVideo.html",{"form":form})
 		else:
 			form = VideoForm(instance=video)
-			return render(request,"video/createVideo.html",{"form":form})
+			return render(request,"video/editVideo.html",{"form":form,"video":video})
+	else:
+		raise Http404
+
+@login_required
+def deleteVideo(request,video_id):
+	current_user = request.user
+	video = Video.objects.get(pk=video_id)
+	if video.channel.user == current_user:
+		if request.method == "POST":
+			video.delete()
+			return redirect("/video/")
+		else:
+			return render(request,"video/delete_video_confirmation.html",{"video":video})
 	else:
 		raise Http404
