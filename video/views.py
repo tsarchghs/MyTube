@@ -78,6 +78,14 @@ def deleteVideo(request,video_id):
 		raise Http404
 
 @login_required
+def deleteComment(request,comment_id):
+	comment = Comment.objects.get(pk=comment_id)
+	video_id = comment.video.id
+	if comment.user == request.user:
+		comment.delete()
+	return redirect(reverse("showVideo",args=[video_id]))
+
+@login_required
 def likeVideo(request,type_,video_id):
 	current_user = request.user
 	try:
