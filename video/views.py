@@ -38,10 +38,10 @@ def createVideo(request):
 				video.save()
 				return redirect(reverse("createVideo"))
 			else:
-				return render(request,"video/createVideo.html",{"form":form})
+				return render(request,"video/video_form.html",{"action":"Create","form":form})
 		else:
 			form = VideoForm()
-			return render(request,"video/createVideo.html",{"form":form})
+			return render(request,"video/video_form.html",{"action":"Create","form":form})
 	else:
 		pass #show you don't have a channel page
 
@@ -57,10 +57,10 @@ def editVideo(request,video_id):
 				video.save()
 				return redirect(reverse("editVideo",args=[video_id]))
 			else:
-				return render(request,"video/editVideo.html",{"form":form})
+				return render(request,"video/video_form.html",{"action":"Edit","form":form})
 		else:
 			form = VideoForm(instance=video)
-			return render(request,"video/editVideo.html",{"form":form,"video":video})
+			return render(request,"video/video_form.html",{"action":"Edit","form":form,"video":video})
 	else:
 		raise Http404
 
