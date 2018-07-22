@@ -1,13 +1,22 @@
 from django.db import models
 from channels.models import Channel
 from django.contrib.auth.models import User
-# Create your models here.
+from django.core.validators import FileExtensionValidator
+import mimetypes
+
+def get_extensions_for_type(general_type):
+    for ext in mimetypes.types_map:
+        if mimetypes.types_map[ext].split('/')[0] == general_type:
+            yield ext
+
+VIDEO = tuple(get_extensions_for_type('video'))
 
 class Video(models.Model):
 	channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
-	video_file = models.FileField(upload_to="videos")
+	video_file = models.FileField(upload_to="videos",
+		validators=[FileExtensionValidator(allowed_extensions=VIDEO)])
 	title = models.CharField(max_length=300)
 	description = models.TextField()
 
