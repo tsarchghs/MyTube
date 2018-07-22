@@ -20,7 +20,7 @@ class Video(models.Model):
 	title = models.CharField(max_length=300)
 	description = models.TextField()
 
-class Like(models.Model):
+class VideoLike(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
@@ -40,3 +40,4 @@ class Comment(models.Model):
 			return content
 		else:
 			return content[300:] + "..."
+
