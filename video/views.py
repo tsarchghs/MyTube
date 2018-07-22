@@ -128,10 +128,10 @@ def createComment(request,video_id):
 			comment.save()
 			return redirect(reverse("showVideo",args=[video.id]))
 		else:
-			return render(request,"video/comment_form.html",{"form":form})
+			return render(request,"video/comment_form.html",{"action":"Create","form":form})
 	else:
 		form = CommentForm()
-		return render(request,"video/comment_form.html",{"form":form})
+		return render(request,"video/comment_form.html",{"action":"Create","form":form})
 
 @login_required
 def editComment(request,comment_id):
@@ -146,7 +146,7 @@ def editComment(request,comment_id):
 			comment.save()
 			return redirect(reverse("showVideo",args=[comment.video.id]))
 		else:
-			return render(request,"video/comment_form.html",{"form":form})
+			return render(request,"video/comment_form.html",{"action":"Edit","form":form})
 	else:
 		form = CommentForm(instance=comment)
-		return render(request,"video/comment_form.html",{"form":form})
+		return render(request,"video/comment_form.html",{"action":"Edit","form":form})
