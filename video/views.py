@@ -92,11 +92,25 @@ def likeVideo(request,type_,video_id):
 		video = Video.objects.get(pk=video_id)
 	except:
 		raise Http404
-	if not VideoLike.objects.filter(video=video,user=current_user):
-		if type_ == "like":
-			VideoLike.objects.create(video=video,user=current_user,like=True,dislike=False)
-		elif type_ == "dislike":
-			VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
-		else:
-			raise Http404
+	if type_ == "like":
+		VideoLike.objects.create(video=video,user=current_user,like=True,dislike=False)
+	elif type_ == "dislike":
+		VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
+	else:
+		raise Http404
 	return redirect(reverse("showVideo",args=[video_id]))
+
+@login_required
+def likeComment(request,type_,comment_id):
+	current_user = request.user
+	try:
+		comment = Comment.objects.get(pk=comment_id)
+	except:
+		raise Http404
+	if type_ == "like":
+		CommentLike.objects.create(comment=comment,user=current_user,like=True,dislike=False)
+	elif type_ == "dislike":
+		CommentLike.objects.create(comment=comment,user=current_user,like=False,dislike=True)
+	else:
+		raise Http404
+	return redirect(reverse("showVideo",args=[comment.video.id]))
