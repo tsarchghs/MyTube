@@ -3,5 +3,6 @@ from .models import *
 # Register your models here.
 
 admin.site.register(Video)
-admin.site.register(Like)
+admin.site.register(VideoLike)
 admin.site.register(Comment)
+admin.site.register(CommentLike)
