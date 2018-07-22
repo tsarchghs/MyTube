@@ -21,7 +21,7 @@ def showVideo(request,video_id):
 			   "video_likes":video_likes-video_dislikes,
 			   "comment_likes":comment_likes,			   
 			   }
-	return render(request,"video/showMovie.html",context)
+	return render(request,"video/showVideo.html",context)
 
 
 @login_required
@@ -76,3 +76,19 @@ def deleteVideo(request,video_id):
 			return render(request,"video/delete_video_confirmation.html",{"video":video})
 	else:
 		raise Http404
+
+@login_required
+def likeVideo(request,type_,video_id):
+	current_user = request.user
+	try:
+		video = Video.objects.get(pk=video_id)
+	except:
+		raise Http404
+	if not VideoLike.objects.filter(video=video,user=current_user):
+		if type_ == "like":
+			VideoLike.objects.create(video=video,user=current_user,like=True,dislike=False)
+		elif type_ == "dislike":
+			VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
+		else:
+			raise Http404
+	return redirect(reverse("showVideo",args=[video_id]))
