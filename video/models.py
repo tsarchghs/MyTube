@@ -38,9 +38,9 @@ class Comment(models.Model):
 
 	def __str__(self):
 		if len(self.content) < 300:
-			return content
+			return self.content
 		else:
-			return content[300:] + "..."
+			return self.content[300:] + "..."
 
 class CommentLike(models.Model):
 	user = models.ForeignKey(User,on_delete=models.CASCADE)
