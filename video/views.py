@@ -1,7 +1,7 @@
 from django.shortcuts import render,redirect,reverse
 from channels.models import Channel
 from .models import Video,VideoLike,Comment,CommentLike
-from .forms import VideoForm
+from .forms import VideoForm,CommentForm
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
 from collections import OrderedDict
@@ -114,3 +114,21 @@ def likeComment(request,type_,comment_id):
 	else:
 		raise Http404
 	return redirect(reverse("showVideo",args=[comment.video.id]))
+
+@login_required
+def createComment(request,video_id):
+	current_user = request.user
+	video = Video.objects.get(pk=video_id)
+	if request.method == "POST":
+		form = CommentForm(request.POST)
+		if form.is_valid():
+			comment = form.save(commit=False)
+			comment.user = current_user
+			comment.video = video
+			comment.save()
+			return redirect(reverse("showVideo",args=[video.id]))
+		else:
+			return render(request,"video/comment_form.html",{"form":form})
+	else:
+		form = CommentForm()
+		return render(request,"video/comment_form.html",{"form":form})
