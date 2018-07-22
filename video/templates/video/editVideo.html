@@ -1,0 +1,12 @@
+
+		<div class="card">
+				<span class="card-title">Edit video</span>
+			<div class="card-content">
+				{{ form.errors }}
+				<form method="POST" enctype=multipart/form-data>
+					{% csrf_token %} {{ form.as_p }}
+					<button type="submit" class="waves-effect waves-light btn-large pink m-t-20" style="width:100%">Edit video</button>
+				</form>
+			</div>
+		</div>
+

@@ -1,0 +1,12 @@
+video : {{ video }}
+<br>
+video likes : {{video_likes}}
+<br>
+comments :
+<ul>
+	{% for comment,likes in comment_likes.items %}
+		<li> {{comment|linebreaks}} {{ likes }}</li>
+	{% empty %}
+		<li>No comments to show</li>
+	{% endfor %}
+<ul>
