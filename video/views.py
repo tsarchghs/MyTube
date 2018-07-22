@@ -132,3 +132,21 @@ def createComment(request,video_id):
 	else:
 		form = CommentForm()
 		return render(request,"video/comment_form.html",{"form":form})
+
+@login_required
+def editComment(request,comment_id):
+	current_user = request.user
+	try:
+		comment = Comment.objects.get(pk=comment_id)
+	except:
+		raise Http404
+	if request.method == "POST":
+		form = CommentForm(request.POST,instance=comment)
+		if form.is_valid():
+			comment.save()
+			return redirect(reverse("showVideo",args=[comment.video.id]))
+		else:
+			return render(request,"video/comment_form.html",{"form":form})
+	else:
+		form = CommentForm(instance=comment)
+		return render(request,"video/comment_form.html",{"form":form})
