@@ -5,7 +5,7 @@ class Channel(models.Model):
     user = models.ForeignKey(User, on_delete=models.CASCADE)
     name = models.CharField(max_length=200)
     description = models.CharField(max_length=200)
-
+    photo = models.ImageField(upload_to="channel_image")
 
 
     def __str__(self):
