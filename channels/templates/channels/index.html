@@ -8,5 +8,13 @@
 </head>
 <body>
     Index Home
+    <ul>Channels
+	    {% for channel in channels %}
+	    	<li>{{channel}}</li>
+	    {% empty %}
+	    	<li>No channels to show</li>
+	    {% endfor %}
+	</ul>
+
 </body>
 </html>

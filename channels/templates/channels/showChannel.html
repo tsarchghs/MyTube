@@ -1,0 +1,12 @@
+Channel : {{channel}}
+<br>
+channel_subscribes : {{ channel_subscribes|length }}
+<br>
+Channel videos:
+<ul>
+	{% for video in channel_videos %}
+		<li> {{video}} </li>
+	{% empty %}
+		<li>No videos to show</li>
+	{% endfor %}
+</ul>
