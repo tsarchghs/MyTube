@@ -49,3 +49,8 @@ class CommentLike(models.Model):
 	comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
 	like = models.BooleanField()
 	dislike = models.BooleanField()
+
+class UserView(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	browser = models.CharField(max_length=300)
+	video = models.ForeignKey(Video,on_delete=models.CASCADE)
