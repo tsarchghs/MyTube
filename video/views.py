@@ -25,7 +25,8 @@ def showVideo(request,video_id):
 		dislikes = CommentLike.objects.filter(comment=comment,like=False,dislike=True)		
 		comment_likes[comment] = len(likes) - len(dislikes)
 	context = {"video":video,
-			   "video_likes":video_likes-video_dislikes,
+			   "video_likes":video_likes,
+			   "video_dislikes":video_dislikes,
 			   "comment_likes":comment_likes,
 			   "views":len(userViews)+len(anonymousViews)   
 			   }
