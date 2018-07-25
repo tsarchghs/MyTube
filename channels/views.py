@@ -8,7 +8,7 @@ def index(request):
 	return render(request, 'channels/index.html', {"channels":channels})
 
 def showChannel(request,channel_id):
-	channel = Channel.objects.get_object_or_404(Channel,pk=channel_id)
+	channel = get_object_or_404(Channel,pk=channel_id)
 	channel_videos = Video.objects.filter(channel=channel)
 	channel_subscribes = Subscribe.objects.filter(channel=channel)
 	context = {"channel":channel,
