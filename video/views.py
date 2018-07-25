@@ -1,6 +1,6 @@
 from django.shortcuts import render,redirect,reverse
 from channels.models import Channel
-from .models import Video,VideoLike,Comment,CommentLike
+from .models import Video,VideoLike,Comment,CommentLike,UserView,AnonymousView
 from .forms import VideoForm,CommentForm
 from django.contrib.auth.decorators import login_required
 from django.http import Http404
@@ -8,7 +8,14 @@ from collections import OrderedDict
 # Create your views here.
 
 def showVideo(request,video_id):
+	user_agent = request.META['HTTP_USER_AGENT']
 	video = Video.objects.get(pk=video_id)
+	if request.user.is_authenticated:
+		UserView.objects.create(user=request.user,browser=user_agent,video=video)
+	else:
+		AnonymousView.objects.create(browser=user_agent,video=video)
+	userViews = UserView.objects.filter(video=video)
+	anonymousViews = AnonymousView.objects.filter(video=video)
 	video_likes = len(VideoLike.objects.filter(video=video,like=True,dislike=False))
 	video_dislikes = len(VideoLike.objects.filter(video=video,like=False,dislike=True))
 	video_comments = Comment.objects.filter(video=video).order_by("-id")
@@ -18,8 +25,10 @@ def showVideo(request,video_id):
 		dislikes = CommentLike.objects.filter(comment=comment,like=False,dislike=True)		
 		comment_likes[comment] = len(likes) - len(dislikes)
 	context = {"video":video,
-			   "video_likes":video_likes-video_dislikes,
-			   "comment_likes":comment_likes,			   
+			   "video_likes":video_likes,
+			   "video_dislikes":video_dislikes,
+			   "comment_likes":comment_likes,
+			   "views":len(userViews)+len(anonymousViews)   
 			   }
 	return render(request,"video/showVideo.html",context)
 
@@ -38,10 +47,10 @@ def createVideo(request):
 				video.save()
 				return redirect(reverse("createVideo"))
 			else:
-				return render(request,"video/createVideo.html",{"form":form})
+				return render(request,"video/video_form.html",{"action":"Create","form":form})
 		else:
 			form = VideoForm()
-			return render(request,"video/createVideo.html",{"form":form})
+			return render(request,"video/video_form.html",{"action":"Create","form":form})
 	else:
 		pass #show you don't have a channel page
 
@@ -57,10 +66,10 @@ def editVideo(request,video_id):
 				video.save()
 				return redirect(reverse("editVideo",args=[video_id]))
 			else:
-				return render(request,"video/editVideo.html",{"form":form})
+				return render(request,"video/video_form.html",{"action":"Edit","form":form})
 		else:
 			form = VideoForm(instance=video)
-			return render(request,"video/editVideo.html",{"form":form,"video":video})
+			return render(request,"video/video_form.html",{"action":"Edit","form":form,"video":video})
 	else:
 		raise Http404
 
@@ -128,10 +137,10 @@ def createComment(request,video_id):
 			comment.save()
 			return redirect(reverse("showVideo",args=[video.id]))
 		else:
-			return render(request,"video/comment_form.html",{"form":form})
+			return render(request,"video/comment_form.html",{"action":"Create","form":form})
 	else:
 		form = CommentForm()
-		return render(request,"video/comment_form.html",{"form":form})
+		return render(request,"video/comment_form.html",{"action":"Create","form":form})
 
 @login_required
 def editComment(request,comment_id):
@@ -146,7 +155,7 @@ def editComment(request,comment_id):
 			comment.save()
 			return redirect(reverse("showVideo",args=[comment.video.id]))
 		else:
-			return render(request,"video/comment_form.html",{"form":form})
+			return render(request,"video/comment_form.html",{"action":"Edit","form":form})
 	else:
 		form = CommentForm(instance=comment)
-		return render(request,"video/comment_form.html",{"form":form})
+		return render(request,"video/comment_form.html",{"action":"Edit","form":form})
