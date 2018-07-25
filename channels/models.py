@@ -13,3 +13,7 @@ class Channel(models.Model):
 
     def __unicode__(self):
         return "{user}, created channel: '{name}'".format(name=self.name, user=self.user)
+
+def Subscribe(models.Model):
+	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
