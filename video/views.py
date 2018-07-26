@@ -7,6 +7,17 @@ from django.http import Http404
 from collections import OrderedDict
 # Create your views here.
 
+def index(request):
+	video_views = {}
+	videos = Video.objects.all()
+	for video in videos:
+		anonViews = len(AnonymousView.objects.filter(video=video))
+		userViews = len(UserView.objects.filter(video=video))
+		video_views[video] = anonViews + userViews
+	context = {"video_views":video_views}
+	return render(request,"video/index.html",context)
+
+
 def showVideo(request,video_id):
 	user_agent = request.META['HTTP_USER_AGENT']
 	video = Video.objects.get(pk=video_id)
