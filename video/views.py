@@ -109,7 +109,7 @@ def deleteComment(request,comment_id):
 def likeVideo(request,type_,video_id):
 	current_user = request.user
 	try:
-		video = Video.objects.get(pk=video_id)
+		video = get_object_or_404(Video,pk=video_id)
 	except:
 		raise Http404
 	if type_ == "like":
@@ -124,7 +124,7 @@ def likeVideo(request,type_,video_id):
 def likeComment(request,type_,comment_id):
 	current_user = request.user
 	try:
-		comment = Comment.objects.get(pk=comment_id)
+		comment = get_object_or_404(Comment,pk=comment_id)
 	except:
 		raise Http404
 	if type_ == "like":
