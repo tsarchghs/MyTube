@@ -103,4 +103,14 @@ class TestViews(TestCase):
 		url_valid = reverse("createComment",args=[self.video_object.id])
 		url_invalid2 = reverse("createComment",args=[999])
 		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect,data=valid_data)
+		self.checkStatusCode(url_valid,"POST",200,data=invalid_data)
+		self.checkStatusCode(url_invalid2,"GET",404)
+	def test_editComment_view(self):
+		valid_data = {"content":"testing"}
+		invalid_data = {"":""}
+		url_valid_redirect = reverse("showVideo",args=[self.video_object.id])
+		url_valid = reverse("editComment",args=[self.video_object.id])
+		url_invalid2 = reverse("editComment",args=[999])
+		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect,data=valid_data)
+		self.checkStatusCode(url_valid,"POST",200,data=invalid_data)
 		self.checkStatusCode(url_invalid2,"GET",404)
