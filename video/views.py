@@ -99,7 +99,7 @@ def deleteVideo(request,video_id):
 
 @login_required
 def deleteComment(request,comment_id):
-	comment = Comment.objects.get(pk=comment_id)
+	comment = get_object_or_404(Comment,pk=comment_id)
 	video_id = comment.video.id
 	if comment.user == request.user:
 		comment.delete()
