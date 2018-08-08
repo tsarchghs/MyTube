@@ -27,9 +27,13 @@ class TestViews(TestCase):
 													 video=self.video_object,
 													 content="testing")
 		self.client.force_login(self.user_object)
-	def checkStatusCode(self,url,method,statuscode,redirectTo=""):
+	def checkStatusCode(self,url,method,statuscode,redirectTo="",data=""):
 		if method == "POST":
-			response = self.client.post(url,HTTP_USER_AGENT='Mozilla/5.0')
+			if data:
+				response = self.client.post(url,data)
+			else:
+				response = self.client.post(url,HTTP_USER_AGENT='Mozilla/5.0')
+
 		elif method == "GET":
 			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
 		print("{} - {} - {}".format(url,response.status_code,statuscode))
@@ -43,7 +47,8 @@ class TestViews(TestCase):
 						 "createVideo":[],
 						 "editVideo":[self.video_object.id],
 						 "createComment":[self.video_object.id],
-						 "editComment":[self.comment_object.id]}
+						 "editComment":[self.comment_object.id],
+						 "deleteVideo":[self.video_object.id]}
 		for pathname,args in pathname_args.items():
 			url = reverse(pathname,args=args)
 			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0') #HTTP_USER_AGENT needed for showVideo view
@@ -52,7 +57,6 @@ class TestViews(TestCase):
 		url_valid = reverse("showVideo",args=[self.video_object.id])
 		url_invalid = reverse("showVideo",args=[100])
 		url_invalid2 = "/video/dsadas"
-		self.checkStatusCode(url_valid,"GET",200)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
 	def test_deleteVideo_view(self):
@@ -79,9 +83,9 @@ class TestViews(TestCase):
 		url_invalid = reverse("likeVideo",args=["dsasd",self.video_object.id])
 		url_invalid2 = reverse("likeVideo",args=["like",312])
 		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
+		self.checkStatusCode(url_valid2,"POST",302,url_valid_redirect)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
-
 	def test_likeComment_view(self):
 		url_valid_redirect = reverse("showVideo",args=[self.video_object.id])
 		url_valid = reverse("likeComment",args=["like",self.comment_object.id])
@@ -89,5 +93,14 @@ class TestViews(TestCase):
 		url_invalid = reverse("likeComment",args=["dsasd",self.comment_object.id])
 		url_invalid2 = reverse("likeComment",args=["like",999])
 		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
+		self.checkStatusCode(url_valid2,"POST",302,url_valid_redirect)
 		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
+	def test_createComment_view(self):
+		valid_data = {"content":"testing"}
+		invalid_data = {"":""}
+		url_valid_redirect = reverse("showVideo",args=[self.video_object.id])
+		url_valid = reverse("createComment",args=[self.video_object.id])
+		url_invalid2 = reverse("createComment",args=[999])
+		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect,data=valid_data)
 		self.checkStatusCode(url_invalid2,"GET",404)
