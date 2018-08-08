@@ -42,13 +42,18 @@ class TestViews(TestCase):
 		for pathname,args in pathname_args.items():
 			url = reverse(pathname,args=args)
 			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0') #HTTP_USER_AGENT needed for showVideo view
-			print(url)
-			print(response)
 			self.assertEqual(response.status_code,200)
 	def test_showVideo_view(self):
 		url_valid = reverse("showVideo",args=[self.video_object.id])
 		url_invalid = reverse("showVideo",args=[100])
 		url_invalid2 = "/video/dsadas"
+		self.checkStatusCode(url_valid,"GET",200)
+		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
+	def test_deleteVideo_view(self):
+		url_valid = reverse("deleteVideo",args=[self.video_object.id])
+		url_invalid = reverse("deleteVideo",args=[100])
+		url_invalid2 = "/delete/dsadas"
 		self.checkStatusCode(url_valid,"GET",200)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)

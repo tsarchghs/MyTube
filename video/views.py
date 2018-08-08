@@ -87,7 +87,7 @@ def editVideo(request,video_id):
 @login_required
 def deleteVideo(request,video_id):
 	current_user = request.user
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if video.channel.user == current_user:
 		if request.method == "POST":
 			video.delete()
