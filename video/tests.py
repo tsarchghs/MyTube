@@ -27,6 +27,27 @@ class TestViews(TestCase):
 													 video=self.video_object,
 													 content="testing")
 		self.client.force_login(self.user_object)
+	def test_login_required(self):
+		self.client.logout()
+		pathname_args = {"createVideo":[],
+						 "editVideo":[self.video_object.id],
+						 "createComment":[self.video_object.id],
+						 "editComment":[self.comment_object.id],
+						 "deleteVideo":[self.video_object.id],
+						 "likeVideo":["like",self.video_object.id],
+						 "likeVideo":["dislike",self.video_object.id],
+						 "likeComment":["like",self.video_object.id],
+						 "likeComment":["dislike",self.video_object.id],
+						 "deleteComment":[self.comment_object.id]}
+		for pathname,args in pathname_args.items():
+			url = reverse(pathname,args=args)
+			redirect_to = "/auth/login/?next=" + url
+			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
+			print("Testing login required {}".format(pathname))
+			self.assertEqual(response.status_code,302)
+			self.assertEqual(response.url,redirect_to)
+		self.client.force_login(self.user_object)
+
 	def checkStatusCode(self,url,method,statuscode,redirectTo="",data=""):
 		if method == "POST":
 			if data:
