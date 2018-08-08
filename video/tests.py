@@ -13,6 +13,8 @@ class TestViews(TestCase):
 		photoFile = open("photo.png","r")
 		self.user_object = User.objects.create(username="testing",
 											   password="testing")
+		self.user_object2 = User.objects.create(username="testing2",
+												password="testing2")
 		self.channel_object = Channel.objects.create(user=self.user_object,
 													 name="testing",
 													 description="testing",
@@ -25,11 +27,14 @@ class TestViews(TestCase):
 													 video=self.video_object,
 													 content="testing")
 		self.client.force_login(self.user_object)
-	def checkStatusCode(self,url,method,statuscode,data=""):
+	def checkStatusCode(self,url,method,statuscode,redirectTo=""):
 		if method == "POST":
-			response = self.client.post(url,data,HTTP_USER_AGENT='Mozilla/5.0')
+			response = self.client.post(url,HTTP_USER_AGENT='Mozilla/5.0')
 		elif method == "GET":
 			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
+		print("{} - {} - {}".format(url,response.status_code,statuscode))
+		if response.status_code == 302:
+			self.assertEqual(response.url,redirectTo)
 		self.assertEqual(response.status_code,statuscode)
 
 	def test_views_200(self):
@@ -52,8 +57,10 @@ class TestViews(TestCase):
 		self.checkStatusCode(url_invalid2,"GET",404)
 	def test_deleteVideo_view(self):
 		url_valid = reverse("deleteVideo",args=[self.video_object.id])
+		url_valid_post_redirect = reverse("index")
 		url_invalid = reverse("deleteVideo",args=[100])
 		url_invalid2 = "/delete/dsadas"
 		self.checkStatusCode(url_valid,"GET",200)
+		self.checkStatusCode(url_valid,"POST",302,url_valid_post_redirect)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
