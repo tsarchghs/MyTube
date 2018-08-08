@@ -7,6 +7,10 @@ env:
   -DJANGO=2.0 DB=sqlite3
 install:
   - pip install -r requirements.txt
+  - python manage.py makemigrations authentication
+  - python manage.py makemigrations channels
+  - python manage.py makemigrations video
+  - python manage.py migrate
 
 script:
   - python manage.py test
