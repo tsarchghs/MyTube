@@ -9,8 +9,8 @@ from django.core.files.base import File
 
 class TestViews(TestCase):
 	def setUp(self):
-		videoFile = open("video.mp4","r")
-		photoFile = open("photo.png","r")
+		videoFile = open("video.mp4","w+")
+		photoFile = open("photo.png","w+")
 		self.user_object = User.objects.create(username="testing",
 											   password="testing")
 		self.user_object2 = User.objects.create(username="testing2",
