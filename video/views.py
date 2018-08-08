@@ -63,7 +63,7 @@ def createVideo(request):
 			form = VideoForm()
 			return render(request,"video/video_form.html",{"action":"Create","form":form})
 	else:
-		pass #show you don't have a channel page
+		return render(request,"video/channel_not_found.html")
 
 @login_required
 def editVideo(request,video_id):
