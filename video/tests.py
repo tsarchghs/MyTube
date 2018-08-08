@@ -24,3 +24,15 @@ class TestViews(TestCase):
 													 video=self.video_object,
 													 content="testing")
 		self.client.force_login(self.user_object)
+	def test_views_200(self):
+		pathname_args = {"index":[],
+						 "showVideo":[self.video_object.id],
+						 "createVideo":[],
+						 "editVideo":[self.video_object.id],
+						 "createComment":[self.video_object.id],
+						 "editComment":[self.comment_object.id]}
+		for pathname,args in pathname_args.items():
+			url = reverse(pathname,args=args)
+			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
+			print(response)
+			self.assertEqual(response.status_code,200)
