@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from channels.models import Channel
 from .models import Video,VideoLike,Comment,CommentLike,UserView,AnonymousView
 from .forms import VideoForm,CommentForm
@@ -20,7 +20,7 @@ def index(request):
 
 def showVideo(request,video_id):
 	user_agent = request.META['HTTP_USER_AGENT']
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if request.user.is_authenticated:
 		UserView.objects.create(user=request.user,browser=user_agent,video=video)
 	else:
@@ -63,7 +63,7 @@ def createVideo(request):
 			form = VideoForm()
 			return render(request,"video/video_form.html",{"action":"Create","form":form})
 	else:
-		pass #show you don't have a channel page
+		return render(request,"video/channel_not_found.html")
 
 @login_required
 def editVideo(request,video_id):
@@ -87,7 +87,7 @@ def editVideo(request,video_id):
 @login_required
 def deleteVideo(request,video_id):
 	current_user = request.user
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if video.channel.user == current_user:
 		if request.method == "POST":
 			video.delete()
@@ -99,7 +99,7 @@ def deleteVideo(request,video_id):
 
 @login_required
 def deleteComment(request,comment_id):
-	comment = Comment.objects.get(pk=comment_id)
+	comment = get_object_or_404(Comment,pk=comment_id)
 	video_id = comment.video.id
 	if comment.user == request.user:
 		comment.delete()
@@ -109,7 +109,7 @@ def deleteComment(request,comment_id):
 def likeVideo(request,type_,video_id):
 	current_user = request.user
 	try:
-		video = Video.objects.get(pk=video_id)
+		video = get_object_or_404(Video,pk=video_id)
 	except:
 		raise Http404
 	if type_ == "like":
@@ -124,7 +124,7 @@ def likeVideo(request,type_,video_id):
 def likeComment(request,type_,comment_id):
 	current_user = request.user
 	try:
-		comment = Comment.objects.get(pk=comment_id)
+		comment = get_object_or_404(Comment,pk=comment_id)
 	except:
 		raise Http404
 	if type_ == "like":
@@ -138,7 +138,7 @@ def likeComment(request,type_,comment_id):
 @login_required
 def createComment(request,video_id):
 	current_user = request.user
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if request.method == "POST":
 		form = CommentForm(request.POST)
 		if form.is_valid():
