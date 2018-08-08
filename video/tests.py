@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.core.files.base import File
 # Create your tests here.
 
+
 class TestViews(TestCase):
 	def setUp(self):
 		videoFile = open("video.mp4","r")
@@ -24,6 +25,13 @@ class TestViews(TestCase):
 													 video=self.video_object,
 													 content="testing")
 		self.client.force_login(self.user_object)
+	def checkStatusCode(self,url,method,statuscode,data=""):
+		if method == "POST":
+			response = self.client.post(url,data,HTTP_USER_AGENT='Mozilla/5.0')
+		elif method == "GET":
+			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
+		self.assertEqual(response.status_code,statuscode)
+
 	def test_views_200(self):
 		pathname_args = {"index":[],
 						 "showVideo":[self.video_object.id],
@@ -39,11 +47,8 @@ class TestViews(TestCase):
 			self.assertEqual(response.status_code,200)
 	def test_showVideo_view(self):
 		url_valid = reverse("showVideo",args=[self.video_object.id])
-		response = self.client.get(url_valid,HTTP_USER_AGENT='Mozilla/5.0')
-		self.assertEqual(response.status_code,200)
 		url_invalid = reverse("showVideo",args=[100])
-		response1 = self.client.get(url_invalid,HTTP_USER_AGENT='Mozilla/5.0')
-		self.assertEqual(response1.status_code,404)
 		url_invalid2 = "/video/dsadas"
-		response2 = self.client.get(url_invalid2,HTTP_USER_AGENT='Mozilla/5.0')
-		self.assertEqual(response2.status_code,404)
+		self.checkStatusCode(url_valid,"GET",200)
+		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
