@@ -73,12 +73,21 @@ class TestViews(TestCase):
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
 	def test_likeVideo_view(self):
+		url_valid_redirect = reverse("showVideo",args=[self.video_object.id])
 		url_valid = reverse("likeVideo",args=["like",self.video_object.id])
 		url_valid2 = reverse("likeVideo",args=["dislike",self.video_object.id])
 		url_invalid = reverse("likeVideo",args=["dsasd",self.video_object.id])
 		url_invalid2 = reverse("likeVideo",args=["like",312])
+		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
+		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
+
 	def test_likeComment_view(self):
+		url_valid_redirect = reverse("showVideo",args=[self.video_object.id])
 		url_valid = reverse("likeComment",args=["like",self.comment_object.id])
 		url_valid2 = reverse("likeComment",args=["dislike",self.comment_object.id])
 		url_invalid = reverse("likeComment",args=["dsasd",self.comment_object.id])
 		url_invalid2 = reverse("likeComment",args=["like",999])
+		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
+		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
