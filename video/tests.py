@@ -33,6 +33,17 @@ class TestViews(TestCase):
 						 "editComment":[self.comment_object.id]}
 		for pathname,args in pathname_args.items():
 			url = reverse(pathname,args=args)
-			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0')
+			response = self.client.get(url,HTTP_USER_AGENT='Mozilla/5.0') #HTTP_USER_AGENT needed for showVideo view
+			print(url)
 			print(response)
 			self.assertEqual(response.status_code,200)
+	def test_showVideo_view(self):
+		url_valid = reverse("showVideo",args=[self.video_object.id])
+		response = self.client.get(url_valid,HTTP_USER_AGENT='Mozilla/5.0')
+		self.assertEqual(response.status_code,200)
+		url_invalid = reverse("showVideo",args=[100])
+		response1 = self.client.get(url_invalid,HTTP_USER_AGENT='Mozilla/5.0')
+		self.assertEqual(response1.status_code,404)
+		url_invalid2 = "/video/dsadas"
+		response2 = self.client.get(url_invalid2,HTTP_USER_AGENT='Mozilla/5.0')
+		self.assertEqual(response2.status_code,404)
