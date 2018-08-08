@@ -138,7 +138,7 @@ def likeComment(request,type_,comment_id):
 @login_required
 def createComment(request,video_id):
 	current_user = request.user
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if request.method == "POST":
 		form = CommentForm(request.POST)
 		if form.is_valid():
