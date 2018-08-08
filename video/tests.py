@@ -64,3 +64,11 @@ class TestViews(TestCase):
 		self.checkStatusCode(url_valid,"POST",302,url_valid_post_redirect)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
+	def test_deleteComment_view(self):
+		url_valid = reverse("deleteComment",args=[self.comment_object.id])
+		url_valid_redirect = reverse("showVideo",args=[self.comment_object.video.id])
+		url_invalid = reverse("deleteComment",args=[100])
+		url_invalid2 = "/delete/comment/dsadas"
+		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
+		self.checkStatusCode(url_invalid,"GET",404)
+		self.checkStatusCode(url_invalid2,"GET",404)
