@@ -77,3 +77,8 @@ class TestViews(TestCase):
 		url_valid2 = reverse("likeVideo",args=["dislike",self.video_object.id])
 		url_invalid = reverse("likeVideo",args=["dsasd",self.video_object.id])
 		url_invalid2 = reverse("likeVideo",args=["like",312])
+	def test_likeComment_view(self):
+		url_valid = reverse("likeComment",args=["like",self.comment_object.id])
+		url_valid2 = reverse("likeComment",args=["dislike",self.comment_object.id])
+		url_invalid = reverse("likeComment",args=["dsasd",self.comment_object.id])
+		url_invalid2 = reverse("likeComment",args=["like",999])
