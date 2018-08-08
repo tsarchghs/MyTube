@@ -1,4 +1,4 @@
-from django.shortcuts import render,redirect,reverse
+from django.shortcuts import render,redirect,reverse,get_object_or_404
 from channels.models import Channel
 from .models import Video,VideoLike,Comment,CommentLike,UserView,AnonymousView
 from .forms import VideoForm,CommentForm
@@ -20,7 +20,7 @@ def index(request):
 
 def showVideo(request,video_id):
 	user_agent = request.META['HTTP_USER_AGENT']
-	video = Video.objects.get(pk=video_id)
+	video = get_object_or_404(Video,pk=video_id)
 	if request.user.is_authenticated:
 		UserView.objects.create(user=request.user,browser=user_agent,video=video)
 	else:
