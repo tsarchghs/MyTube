@@ -72,3 +72,8 @@ class TestViews(TestCase):
 		self.checkStatusCode(url_valid,"POST",302,url_valid_redirect)
 		self.checkStatusCode(url_invalid,"GET",404)
 		self.checkStatusCode(url_invalid2,"GET",404)
+	def test_likeVideo_view(self):
+		url_valid = reverse("likeVideo",args=["like",self.video_object.id])
+		url_valid2 = reverse("likeVideo",args=["dislike",self.video_object.id])
+		url_invalid = reverse("likeVideo",args=["dsasd",self.video_object.id])
+		url_invalid2 = reverse("likeVideo",args=["like",312])
