@@ -295,8 +295,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li><a href="#" class="icon twitter-icon">Twitter</a></li>
 								<li><a href="#" class="icon pinterest-icon">Pinterest</a></li>
 								<li><a href="#" class="icon whatsapp-icon">Whatsapp</a></li>
-								<li><a href="#" class="icon like">Like ({{video_likes}})</a></li>
-								<li><a href="#" class="icon dislike">Dislike ({{video_dislikes}})</a></li>
+								<li><a href="{% url 'likeVideo' 'like' video.id %}" class="icon like">Like ({{video_likes}})</a></li>
+								<li><a href="{% url 'likeVideo' 'dislike' video.id %}" class="icon dislike">Dislike ({{video_dislikes}})</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
 								<li class="view">{{views}} Views</li>
 							</ul>
