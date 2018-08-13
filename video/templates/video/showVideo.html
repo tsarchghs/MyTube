@@ -295,7 +295,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li><a href="#" class="icon twitter-icon">Twitter</a></li>
 								<li><a href="#" class="icon pinterest-icon">Pinterest</a></li>
 								<li><a href="#" class="icon whatsapp-icon">Whatsapp</a></li>
-								<li><a href="#" class="icon like">Like</a></li>
+								<li><a href="#" class="icon like">Like ({{video_likes}})</a></li>
+								<li><a href="#" class="icon dislike">Dislike ({{video_dislikes}})</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
 								<li class="view">{{views}} Views</li>
 							</ul>
@@ -343,7 +344,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="all-comments">
 						<div class="all-comments-info">
-							<a href="#">All Comments (8,657)</a>
+							<a href="#">All Comments ({{comment_likes|length}})</a>
 							<div class="box">
 								<form>
 									<input type="text" placeholder="Name" required=" ">			           					   
@@ -363,90 +364,21 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</div>
 						</div>
 						<div class="media-grids">
-							<div class="media">
-								<h5>Tom Brown</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
+							{% for comment,likes in comment_likes.items %}
+								<div class="media">
+									<h5>@{{comment.user}}</h5>
+									<div class="media-left">
+										<a href="#">
+											
+										</a>
+									</div>
+									<div class="media-body">
+										<p>{{comment.content}}</p>
+										<span>Likes {{likes}}</a></span><br>
+										<span>View all posts by :<a href="#"> {{comment.user}} </a></span>
+									</div>
 								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Steven Smith</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Marry Johne</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Mark Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
-							<div class="media">
-								<h5>Peter Johnson</h5>
-								<div class="media-left">
-									<a href="#">
-										
-									</a>
-								</div>
-								<div class="media-body">
-									<p>Maecenas ultricies rhoncus tincidunt maecenas imperdiet ipsum id ex pretium hendrerit maecenas imperdiet ipsum id ex pretium hendrerit</p>
-									<span>View all posts by :<a href="#"> Admin </a></span>
-								</div>
-							</div>
+							{% endfor %}
 						</div>
 					</div>
 				</div>
