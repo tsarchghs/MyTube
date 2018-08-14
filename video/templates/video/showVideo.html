@@ -374,7 +374,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 									</div>
 									<div class="media-body">
 										<p>{{comment.content}}</p>
-										<span>Likes {{likes}}</a></span><br>
+										<span>Likes {{likes.likes}}</a></span> <span>Dislikes {{likes.dislikes}}</a></span><br> <a href="{% url 'likeComment' 'like' comment.id %}">Like</a> <a href="{% url 'likeComment' 'dislike' comment.id %}">Dislike</a>
 										<span>View all posts by :<a href="#"> {{comment.user}} </a></span>
 									</div>
 								</div>
