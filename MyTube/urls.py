@@ -6,8 +6,9 @@ from django.urls import path,include
 urlpatterns = [
 	path('admin/', admin.site.urls),
 	path('auth/', include("authentication.urls")),
-	path('channel/', include('channels.urls')),
+	path('channel/', include('user_channel.urls')),
 	path('video/',include('video.urls')),
+	path('/',include('home.urls')),
 ]
 
 

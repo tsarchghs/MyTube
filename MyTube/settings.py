@@ -19,7 +19,7 @@ LOGIN_URL = reverse_lazy("login")
 
 INSTALLED_APPS = [
     'authentication',
-    'channels',
+    'user_channel',
     'video',
     'home',
     'django.contrib.admin',
