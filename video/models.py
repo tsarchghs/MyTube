@@ -1,5 +1,5 @@
 from django.db import models
-from channels.models import Channel
+from user_channel.models import Channel
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 import mimetypes

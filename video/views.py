@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,reverse,get_object_or_404
-from channels.models import Channel
+from user_channel.models import Channel
 from .models import Video,VideoLike,Comment,CommentLike,UserView,AnonymousView
 from .forms import VideoForm,CommentForm
 from django.contrib.auth.decorators import login_required
