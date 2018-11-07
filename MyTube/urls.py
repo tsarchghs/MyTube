@@ -8,7 +8,7 @@ urlpatterns = [
 	path('auth/', include("authentication.urls")),
 	path('channel/', include('user_channel.urls')),
 	path('video/',include('video.urls')),
-	path('/',include('home.urls')),
+	path('',include('home.urls')),
 ]
 
 
