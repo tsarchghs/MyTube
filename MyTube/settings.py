@@ -21,6 +21,7 @@ INSTALLED_APPS = [
     'authentication',
     'channels',
     'video',
+    'home',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
