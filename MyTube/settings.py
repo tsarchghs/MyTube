@@ -22,6 +22,7 @@ INSTALLED_APPS = [
     'user_channel',
     'video',
     'home',
+    'api',
     'django.contrib.admin',
     'django.contrib.auth',
     'django.contrib.contenttypes',
