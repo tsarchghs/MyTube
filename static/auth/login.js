@@ -43,22 +43,3 @@ function login(){
 		}
 	})
 }
-
-window.onload = function(e){
-	console.log(e);
-	login_button = document.getElementById("login_button");
-	login_form = document.getElementById("login_form");
-	login_button.onclick = login;
-	document.getElementById("logout_button").style.cssText = document.defaultView.getComputedStyle(login_button, "").cssText;
-
-}
-
-window.addEventListener("keyup",(event) => {
-	if (event.key == "Enter"){
-		if (document.activeElement == document.getElementById("login_username") ||
-		   (document.activeElement == document.getElementById("login_password"))){
-		   		login();
-		   }
-		   
-	}
-})
