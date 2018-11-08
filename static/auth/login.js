@@ -1,5 +1,11 @@
 
+/*
+<div class="alert alert-danger">
+									  Username or Password was wrong, please try again.
+								</div>
+								*/
 function login(){
+	var login_alert = document.getElementById("login_alert");
 	var csrftoken = Cookies.get('csrftoken');
 	var username = document.getElementById("login_username").value;
 	var password = document.getElementById("login_password").value;
@@ -16,13 +22,26 @@ function login(){
 		return response.json();
 	})
 	.then(function(json){
+		var formData = new FormData();
+		formData.append("username",username);
+		formData.append("password",password);
 		if (json.valid_credentials){
-			console.log("Valid");
+			fetch('http://localhost:8000/auth/login', {
+				method: "POST",	
+				headers: {
+					"X-CSRFToken":csrftoken
+				},
+				body: formData
+			})
+			login_alert.innerHTML = "";
+
 		} else {
-			console.log("invalid");
+			var div = document.createElement("div");
+			div.className = "alert alert-danger";
+			div.innerHTML = "<h6>Username or Password was wrong, please try again.</h6>";
+			login_alert.appendChild(div);
 		}
 	})
-	return false;
 }
 
 window.onload = function(e){
@@ -30,6 +49,8 @@ window.onload = function(e){
 	login_button = document.getElementById("login_button");
 	login_form = document.getElementById("login_form");
 	login_button.onclick = login;
+	document.getElementById("logout_button").style.cssText = document.defaultView.getComputedStyle(login_button, "").cssText;
+
 }
 
 window.addEventListener("keyup",(event) => {
