@@ -9,7 +9,7 @@ urlpatterns = [
 	path('channel/', include('user_channel.urls')),
 	path('video/',include('video.urls')),
 	path('',include('home.urls')),
-	path('api/', include('api.urls')),
+	path('api/', include(('api.urls',"api"),namespace="api")),
 	path('api-auth/', include('rest_framework.urls')),
 ]
 
