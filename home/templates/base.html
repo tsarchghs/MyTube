@@ -21,6 +21,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- Custom Theme files -->
 <link href="{% static 'css/style.css' %}" rel='stylesheet' type='text/css' media="all" />
 <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
+<script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
+<script src="{% static 'auth/login.js' %}"></script>
+
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
@@ -49,7 +52,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 			<div class="header-top-right">
 				<div class="file">
 					<a href="upload.html">Upload</a>
-				</div>	
+					<input class="button_styled" type="submit"  value="LOGOUT"/>
+				</div>
+				{% if user.is_authenticated %}
 				<div class="signin">
 					<a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Sign Up</a>
 					<!-- pop-up-box -->
@@ -196,6 +201,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<a href="#small-dialog" class="play-icon popup-with-zoom-anim">Sign In</a>
 					<div id="small-dialog" class="mfp-hide">
 						<h3>Login</h3>
+							<div id="login_alert">	
+							</div>
 						<div class="social-sits">
 							<div class="facebook-button">
 								<a href="#">Connect with Facebook</a>
@@ -208,17 +215,16 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 							</div>
 						</div>
 						<div class="signup">
-							<form>
-								<input type="text" class="email" placeholder="Enter email / mobile" required="required" pattern="([\w-\.]+@([\w-]+\.)+[\w-]{2,4})?"/>
-								<input type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
-								<input type="submit"  value="LOGIN"/>
-							</form>
+							<input id="login_username" name="username" type="text" placeholder="Username" required="required" pattern=".{1,}" title="Minimum 1 character required" autocomplete="off" />
+							<input id="login_password" name="password" type="password" placeholder="Password" required="required" pattern=".{6,}" title="Minimum 6 characters required" autocomplete="off" />
+							<input id="login_button" type="submit"  value="LOGIN"/>
 							<div class="forgot">
 								<a href="#">Forgot password ?</a>
 							</div>
 						</div>
 						<div class="clearfix"> </div>
 					</div>
+					{% endif %}
 				</div>
 				<div class="clearfix"> </div>
 			</div>
