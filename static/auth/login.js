@@ -34,12 +34,17 @@ function login(){
 				body: formData
 			})
 			login_alert.innerHTML = "";
+			document.getElementById("register_div").style.display = "none";
+			document.getElementById("login_div").style.display = "none";
 
 		} else {
-			var div = document.createElement("div");
-			div.className = "alert alert-danger";
-			div.innerHTML = "<h6>Username or Password was wrong, please try again.</h6>";
-			login_alert.appendChild(div);
+			if (!document.getElementById("invalid_credentials_alert")){
+				var div = document.createElement("div");
+				div.id = "invalid_credentials_alert";
+				div.className = "alert alert-danger";
+				div.innerHTML = "<h6>Username or Password was wrong, please try again.</h6>";
+				login_alert.appendChild(div);
+			}
 		}
 	})
 }
