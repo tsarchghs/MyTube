@@ -26,6 +26,7 @@ function login(){
 		formData.append("username",username);
 		formData.append("password",password);
 		if (json.valid_credentials){
+			var small_dialog = document.getElementById("small-dialog");
 			fetch('http://localhost:8000/auth/login', {
 				method: "POST",	
 				headers: {
@@ -36,6 +37,13 @@ function login(){
 			login_alert.innerHTML = "";
 			document.getElementById("register_div").style.display = "none";
 			document.getElementById("login_div").style.display = "none";
+			console.log(small_dialog);
+			small_dialog.innerHTML = "";
+			var div = document.createElement("div");
+			div.id = "logged_in_alert";
+			div.className = "alert alert-success";
+			div.innerHTML = "<h6>Logged in successfully.</h6>";
+			small_dialog.appendChild(div);
 
 		} else {
 			if (!document.getElementById("invalid_credentials_alert")){
