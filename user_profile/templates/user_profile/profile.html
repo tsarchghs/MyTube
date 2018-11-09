@@ -1,0 +1,16 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block extra_head %}
+  <link rel="stylesheet" type="text/css" href="{% static 'css/profile.css' %}">
+{% endblock extra_head %}
+{% block content %}
+<div class="signin">
+<img style="margin-left: 500px;" src="{% static user_profile.photo.url %}">
+<h2 style="margin-left: 500px;">{{user_profile.user.username}}</h2>
+</div>
+
+{% endblock content %}
+{% block footer %}
+<!-- get back to it when you know how to fix it's position you dumb fuck
+Sincerely, past version of you -->
+{% endblock footer %}
