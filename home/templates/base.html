@@ -56,6 +56,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 					<a href="upload.html">Upload</a>
 					<!-- <input class="button_styled" type="submit"  value="LOGOUT"/> -->
 				</div>
+				{% if not user.is_authenticated %}
 				<div class="signin" id="register_div">
 					<a href="#small-dialog2" class="play-icon popup-with-zoom-anim">Sign Up</a>
 					<!-- pop-up-box -->
@@ -226,6 +227,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 						<div class="clearfix"> </div>
 					</div>
 				</div>
+				{% endif %}
 				<div class="clearfix"> </div>
 			</div>
         </div>
