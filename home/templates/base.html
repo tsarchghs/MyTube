@@ -24,12 +24,15 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script src="{% static 'auth/login.js' %}"></script>
 <script src="{% static 'main.js' %}"></script>
+<link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 
 <!--start-smoth-scrolling-->
 <!-- fonts -->
 <link href='//fonts.googleapis.com/css?family=Open+Sans:300italic,400italic,600italic,700italic,800italic,400,300,600,700,800' rel='stylesheet' type='text/css'>
 <link href='//fonts.googleapis.com/css?family=Poiret+One' rel='stylesheet' type='text/css'>
 <!-- //fonts -->
+{% block extra_head %}
+{% endblock extra_head %}
 </head>
 <body>
 	<input type="hidden" id="authenticated" value="{{ user.is_authenticated }}">
@@ -305,8 +308,8 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 
 {% block content %}
 {% endblock content %}
-</body>
-<div class="footer">
+{% block footer %}
+<div class="footer fixed-bottom">
 	<div class="footer-grids">
 		<div class="footer-top">
 			<div class="footer-top-nav">
@@ -652,6 +655,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 		</div>
 	</div>
 </div>
+{% endblock footer %}
+</body>
+
 		    <!-- Bootstrap core JavaScript
 ================================================== -->
 <!-- Placed at the end of the document so the pages load faster -->
