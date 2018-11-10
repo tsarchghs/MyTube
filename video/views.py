@@ -26,7 +26,6 @@ def showVideo(request,video_id):
 		UserView.objects.create(user=request.user,browser=user_agent,video=video)
 	else:
 		AnonymousView.objects.create(browser=user_agent,video=video)
-	current_user_profile = UserProfile.objects.get(user=request.user)
 	userViews = UserView.objects.filter(video=video)
 	anonymousViews = AnonymousView.objects.filter(video=video)
 	video_likes = len(VideoLike.objects.filter(video=video,like=True,dislike=False))
@@ -37,13 +36,15 @@ def showVideo(request,video_id):
 		likes = CommentLike.objects.filter(comment=comment,like=True,dislike=False)
 		dislikes = CommentLike.objects.filter(comment=comment,like=False,dislike=True)		
 		comment_likes[comment] = {"likes":len(likes),"dislikes":len(dislikes)}
-	context = {"current_user_profile":current_user_profile,
-			   "video":video,
+	context = {"video":video,
 			   "video_likes":video_likes,
 			   "video_dislikes":video_dislikes,
 			   "comment_likes":comment_likes,
 			   "views":len(userViews)+len(anonymousViews)   
 			   }
+	if request.user.is_authenticated:
+		current_user_profile = UserProfile.objects.get(user=request.user)
+		context["current_user_profile"] = current_user_profile
 	return render(request,"video/showVideo.html",context)
 
 
