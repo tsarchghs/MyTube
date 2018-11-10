@@ -7,8 +7,9 @@ from django.core import serializers
 from video.models import Comment
 from .serializers import *
 from user_profile.models import UserProfile
-from video.models import Video
+from video.models import Video,VideoLike
 from user_channel.models import Channel
+from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
 class ValidateCredentials(APIView):
@@ -25,6 +26,48 @@ class ValidateCredentials(APIView):
 		else:
 			content = {"valid_credentials":False}
 		return Response(content)
+
+class LikeVideo(APIView):
+	permission_classes = [IsAuthenticated]
+	def post(self,request):
+		type_ = request.data.get("type_")
+		response_json = {}
+		if type_ not in ["like","dislike"]:
+			return Response("[INVALID type_ ( 'like' or 'dislike' )")
+		video_id = request.data.get("video_id")
+		if not video_id:
+			return Response("[MISSING video_id]")
+		video = Video.objects.get(pk=video_id)
+		current_user = request.user
+		userLiked = VideoLike.objects.filter(video=video,user=current_user,like=True,dislike=False)
+		userDisliked = VideoLike.objects.filter(video=video,user=current_user,like=False,dislike=True)
+
+		if userLiked and type_ == "like":
+			return Response({"created_like":False,"deleted_dislike":False})
+		elif userDisliked and type_ == "dislike":
+			return Response({"created_like":False,"deleted_dislike":False})
+
+		if not userLiked:
+			if type_ == "like":
+				if userDisliked:
+					userDislike = VideoLike.objects.get(video=video,user=current_user,like=False,dislike=True)
+					userDislike.delete()
+					response_json["deleted_dislike"] = True
+				else:
+					response_json["deleted_dislike"] = False
+				VideoLike.objects.create(video=video,user=current_user,like=True,dislike=False)
+				response_json["created_like"] = True
+		elif not userDisliked:
+			if type_ == "dislike":
+				if userLiked:
+					userLike = VideoLike.objects.get(video=video,user=current_user,like=True,dislike=False)
+					userLike.delete()
+					response_json["deleted_like"] = True
+				else:
+					response_json["deleted_like"] = False
+				VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
+				response_json["create_dislike"] = True
+		return Response(response_json)
 
 class ViewChannels(viewsets.ModelViewSet):
 	queryset = Channel.objects.all()
