@@ -110,28 +110,6 @@ def deleteComment(request,comment_id):
 	return redirect(reverse("showVideo",args=[video_id]))
 
 @login_required
-def likeVideo(request,type_,video_id):
-	if type_ not in ["like","dislike"]:
-		raise Http404
-	current_user = request.user
-	video = get_object_or_404(Video,pk=video_id)
-	userLiked = VideoLike.objects.filter(video=video,user=current_user,like=True,dislike=False)
-	userDisliked = VideoLike.objects.filter(video=video,user=current_user,like=False,dislike=True)
-	if not userLiked:
-		if type_ == "like":
-			if userDisliked:
-				userDislike = VideoLike.objects.get(video=video,user=current_user,like=False,dislike=True)
-				userDislike.delete()
-			VideoLike.objects.create(video=video,user=current_user,like=True,dislike=False)
-	elif not userDisliked:
-		if type_ == "dislike":
-			if userLiked:
-				userLike = VideoLike.objects.get(video=video,user=current_user,like=True,dislike=False)
-				userLike.delete()
-			VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
-	return redirect(reverse("showVideo",args=[video_id]))
-
-@login_required
 def likeComment(request,type_,comment_id):
 	if type_ not in ["like","dislike"]:
 		raise Http404
