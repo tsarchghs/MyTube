@@ -10,7 +10,7 @@ urlpatterns = [
 	path('video/',include('video.urls')),
 	path('profile/',include('user_profile.urls')),
 	path('',include('home.urls')),
-	path('api/', include(('api.urls',"api"),namespace="api")),
+	path('api/', include('api.urls')),
 	path('api-auth/', include('rest_framework.urls')),
 ]
 
