@@ -43,9 +43,9 @@ class LikeVideo(APIView):
 		userDisliked = VideoLike.objects.filter(video=video,user=current_user,like=False,dislike=True)
 
 		if userLiked and type_ == "like":
-			return Response({"created_like":False,"deleted_dislike":False})
+			return Response({"created_like":False,"deleted_like":False,"created_dislike":False,"deleted_dislike":False})
 		elif userDisliked and type_ == "dislike":
-			return Response({"created_like":False,"deleted_dislike":False})
+			return Response({"created_like":False,"deleted_like":False,"created_dislike":False,"deleted_dislike":False})
 
 		if not userLiked:
 			if type_ == "like":
@@ -66,7 +66,7 @@ class LikeVideo(APIView):
 				else:
 					response_json["deleted_like"] = False
 				VideoLike.objects.create(video=video,user=current_user,like=False,dislike=True)
-				response_json["create_dislike"] = True
+				response_json["created_dislike"] = True
 		return Response(response_json)
 
 class ViewChannels(viewsets.ModelViewSet):
