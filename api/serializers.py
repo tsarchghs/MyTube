@@ -13,3 +13,13 @@ class UserSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
 		model = User
 		exclude = []
+
+class CommentSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = Comment
+		exclude = []
+
+class UserProfileSerializer(serializers.HyperlinkedModelSerializer):
+	class Meta:
+		model = UserProfile
+		exclude = []
