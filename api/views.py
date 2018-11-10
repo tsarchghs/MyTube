@@ -26,7 +26,7 @@ class ValidateCredentials(APIView):
 			content = {"valid_credentials":False}
 		return Response(content)
 
-class ViewChannel(viewsets.ModelViewSet):
+class ViewChannels(viewsets.ModelViewSet):
 	queryset = Channel.objects.all()
 	serializer_class = ChannelSerializer
 
