@@ -1,4 +1,5 @@
 {% load static %}
+{% load getProfile %}
 <!--
 Author: W3layouts
 Author URL: http://w3layouts.com
@@ -36,6 +37,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<input type="hidden" id="authenticated" value="{{ user.is_authenticated }}">
+	<input type="hidden" id="userProfile_id" value="{{ user.id|getProfile}}">
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
