@@ -12,4 +12,5 @@ router.register("comments",views.ViewComments)
 urlpatterns = [
 	path("",include(router.urls)),
 	path("validate_credentials/",views.ValidateCredentials.as_view(),name="validate_credentials"),
+	path("like_video/",views.LikeVideo.as_view(),name="like_video"),
 ]
