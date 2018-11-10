@@ -9,6 +9,7 @@ function login(){
 	var csrftoken = Cookies.get('csrftoken');
 	var username = document.getElementById("login_username").value;
 	var password = document.getElementById("login_password").value;
+	var authenticated = document.getElementById("authenticated").value;
 	return fetch('http://localhost:8000/api/validate_credentials/?format=json', {
 		method: "POST",
 		headers: {
@@ -33,18 +34,19 @@ function login(){
 					"X-CSRFToken":csrftoken
 				},
 				body: formData
+			}).then(function(response){
+				document.getElementById("authenticated").value = "True";
+				login_alert.innerHTML = "";
+				document.getElementById("register_div").style.display = "none";
+				document.getElementById("login_div").style.display = "none";
+				console.log(small_dialog);
+				small_dialog.innerHTML = "";
+				var div = document.createElement("div");
+				div.id = "logged_in_alert";
+				div.className = "alert alert-success";
+				div.innerHTML = "<h6>Logged in successfully.</h6>";
+				small_dialog.appendChild(div);
 			})
-			login_alert.innerHTML = "";
-			document.getElementById("register_div").style.display = "none";
-			document.getElementById("login_div").style.display = "none";
-			console.log(small_dialog);
-			small_dialog.innerHTML = "";
-			var div = document.createElement("div");
-			div.id = "logged_in_alert";
-			div.className = "alert alert-success";
-			div.innerHTML = "<h6>Logged in successfully.</h6>";
-			small_dialog.appendChild(div);
-
 		} else {
 			if (!document.getElementById("invalid_credentials_alert")){
 				var div = document.createElement("div");
