@@ -10,6 +10,5 @@ urlpatterns = [
 	path("edit/comment/<int:comment_id>",views.editComment,name="editComment"),
 	path("delete/<int:video_id>",views.deleteVideo,name="deleteVideo"),
 	path("delete/comment/<int:comment_id>",views.deleteComment,name="deleteComment"),
-	path("<str:type_>/video/<int:video_id>",views.likeVideo,name="likeVideo"),
 	path("<str:type_>/comment/<int:comment_id>",views.likeComment,name="likeComment"),
 ]
