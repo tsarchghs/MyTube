@@ -4,7 +4,9 @@ window.onload = function(e){
 	authenticated_value = document.getElementById("authenticated").value;
 	login_button = document.getElementById("login_button");
 	login_form = document.getElementById("login_form");
-	login_button.onclick = login;
+	if (login_button != null){
+		login_button.onclick = login;
+	}
 }
 
 window.addEventListener("keyup",(event) => {
