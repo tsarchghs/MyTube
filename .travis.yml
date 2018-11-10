@@ -8,7 +8,7 @@ env:
 install:
   - pip install -r requirements.txt
   - python manage.py makemigrations authentication
-  - python manage.py makemigrations channels
+  - python manage.py makemigrations user_channel
   - python manage.py makemigrations video
   - python manage.py migrate
 
