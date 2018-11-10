@@ -44,7 +44,7 @@ class Comment(models.Model):
 			return self.content[300:] + "..."
 
 class CommentLike(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	user_profile = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 	comment = models.ForeignKey(Comment,on_delete=models.CASCADE)
