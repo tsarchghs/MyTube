@@ -30,3 +30,13 @@ function like(type_){
 		})
 	}
 
+window.onload = function(){
+	document.getElementById("like_a").onclick = () => {
+		like("like");
+		return false;
+	}
+	document.getElementById("dislike_a").onclick = () =>{
+		like("dislike");
+		return false;
+	}
+}
