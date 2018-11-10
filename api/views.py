@@ -5,7 +5,7 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core import serializers
 from video.models import Comment
-from .serializers import CommentSerializer,UserProfileSerializer,UserSerializer,VideoSerializer,ChannelSerializer
+from .serializers import *
 from user_profile.models import UserProfile
 from video.models import Video
 from user_channel.models import Channel
