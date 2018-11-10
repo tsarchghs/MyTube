@@ -2,6 +2,7 @@ from django.db import models
 from user_channel.models import Channel
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
+from user_profile.models import UserProfile
 import mimetypes
 
 def get_extensions_for_type(general_type):
@@ -30,7 +31,7 @@ class VideoLike(models.Model):
 	dislike = models.BooleanField()
 
 class Comment(models.Model):
-	user = models.ForeignKey(User,on_delete=models.CASCADE)
+	user_profile = models.ForeignKey(UserProfile,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 	video = models.ForeignKey(Video,on_delete=models.CASCADE)
