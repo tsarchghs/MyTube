@@ -9,6 +9,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 {% block extra_head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/video/showVideo.css' %}">
 <script type="text/javascript" src="{% static 'video/showVideo_comment.js' %}"></script>
+<script type="text/javascript" src="{% static 'video/showVideo_likeVideo.js' %}"></script>
 {% endblock extra_head %}
 {% block content %}
 	<input type="hidden" id="video_id" value="{{ video.id }}">
@@ -101,8 +102,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 								<li><a href="#" class="icon twitter-icon">Twitter</a></li>
 								<li><a href="#" class="icon pinterest-icon">Pinterest</a></li>
 								<li><a href="#" class="icon whatsapp-icon">Whatsapp</a></li>
-								<li><a href="{% url 'likeVideo' 'like' video.id %}" class="icon like">Like ({{video_likes}})</a></li>
-								<li><a href="{% url 'likeVideo' 'dislike' video.id %}" class="icon dislike">Dislike ({{video_dislikes}})</a></li>
+									<li><a id="like_a" href="#" class="icon like">Like (<div id="likes" style="display: inline;">{{video_likes}}</div>)</a></li>
+									<li><a id="dislike_a" href="#" class="icon dislike">Dislike (<div id="dislikes" style="display: inline;">{{video_dislikes}}</div>)</a></li>
 								<li><a href="#" class="icon comment-icon">Comments</a></li>
 								<li class="view">{{views}} Views</li>
 							</ul>
