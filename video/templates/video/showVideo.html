@@ -11,6 +11,8 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 <script type="text/javascript" src="{% static 'video/showVideo_comment.js' %}"></script>
 {% endblock extra_head %}
 {% block content %}
+	<input type="hidden" id="video_id" value="{{ video.id }}">
+
         <div class="col-sm-3 col-md-2 sidebar">
 			<div class="top-navigation">
 				<div class="t-menu">MENU</div>
