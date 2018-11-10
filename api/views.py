@@ -34,3 +34,10 @@ class ViewUsers(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 
+class ViewUserProfiles(viewsets.ModelViewSet):
+	queryset = UserProfile.objects.all()
+	serializer_class = UserProfileSerializer
+
+class ViewComments(viewsets.ModelViewSet):
+	queryset = Comment.objects.all()
+	serializer_class = CommentSerializer
