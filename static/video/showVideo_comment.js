@@ -2,48 +2,54 @@
 
 window.addEventListener("keyup", (event) => {
 	if (event.key == "Enter") {
-		if (document.getElementById("new_comment") == document.activeElement){
-			var comment;
-			total_comments = document.getElementById("total_comments").innerHTML;
-			api = "http://localhost:8000/api"
-			content = document.getElementById("new_comment").value; //document.getElementById("new_comment").value;
-			userProfile_id = 1//document.getElementByIde("userProfile_id").value;
-			video_id = 1//document.getElementByIde("userProfile_id").value;
-			data = {"content":content,
-					"user_profile":`${api}/user_profiles/${userProfile_id}/`,
-					"video":`${api}/videos/${video_id}/`}
-			csrftoken = Cookies.get("csrftoken")
-			fetch("/api/comments/?format=json",{
-				method: "POST",
-				headers: {
-				    'Accept': 'application/json, text/plain, */*',
-				    'Content-Type': 'application/json',
-					"X-CSRFToken":csrftoken
-				},
-				body: JSON.stringify(data)
-			}).then(function (response){
-				return response.json();
-			}).then(function (json){
-				comment = json
-			}).then(function(json){
-				fetch(comment.user_profile,{
-					method: "GET",
+		authenticated = document.getElementById("authenticated").value;
+		console.log(authenticated);
+		if (authenticated == "True"){
+			if (document.getElementById("new_comment") == document.activeElement){
+				var comment;
+				total_comments = document.getElementById("total_comments").innerHTML;
+				api = "http://localhost:8000/api"
+				content = document.getElementById("new_comment").value; //document.getElementById("new_comment").value;
+				userProfile_id = 1//document.getElementByIde("userProfile_id").value;
+				video_id = 1//document.getElementByIde("userProfile_id").value;
+				data = {"content":content,
+						"user_profile":`${api}/user_profiles/${userProfile_id}/`,
+						"video":`${api}/videos/${video_id}/`}
+				csrftoken = Cookies.get("csrftoken")
+				fetch("/api/comments/?format=json",{
+					method: "POST",
 					headers: {
-						"Accept": "application/json, text/plain, */*",
-						"Content-Type": "application/json",
+					    'Accept': 'application/json, text/plain, */*',
+					    'Content-Type': 'application/json',
 						"X-CSRFToken":csrftoken
 					},
-				}).then(function(response){
+					body: JSON.stringify(data)
+				}).then(function (response){
 					return response.json();
+				}).then(function (json){
+					comment = json
 				}).then(function(json){
-					insertComment(document.getElementById("comments"),
-									htmlComment(comment.id,comment.content,json.photo,
-									comment.firstname,comment.lastname,0));
-					total_comments = String(Number(total_comments) + 1); 
-					document.getElementById("total_comments").innerHTML = total_comments;
+					fetch(comment.user_profile,{
+						method: "GET",
+						headers: {
+							"Accept": "application/json, text/plain, */*",
+							"Content-Type": "application/json",
+							"X-CSRFToken":csrftoken
+						},
+					}).then(function(response){
+						return response.json();
+					}).then(function(json){
+						insertComment(document.getElementById("comments"),
+										htmlComment(comment.id,comment.content,json.photo,
+										comment.firstname,comment.lastname,0));
+						total_comments = String(Number(total_comments) + 1); 
+						document.getElementById("total_comments").innerHTML = total_comments;
+					})
 				})
-			})
-			document.getElementById("new_comment").value = "";	
+				document.getElementById("new_comment").value = "";	
+			}
+		} else {
+			document.getElementById("signin_popup_button").click();
 		}
 	}
 })
