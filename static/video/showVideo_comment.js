@@ -10,8 +10,8 @@ window.addEventListener("keyup", (event) => {
 				total_comments = document.getElementById("total_comments").innerHTML;
 				api = "http://localhost:8000/api"
 				content = document.getElementById("new_comment").value; //document.getElementById("new_comment").value;
-				userProfile_id = 1//document.getElementByIde("userProfile_id").value;
-				video_id = 1//document.getElementByIde("userProfile_id").value;
+				userProfile_id = Number(document.getElementById("userProfile_id").value);
+				video_id = Number(document.getElementById("video_id").value);
 				data = {"content":content,
 						"user_profile":`${api}/user_profiles/${userProfile_id}/`,
 						"video":`${api}/videos/${video_id}/`}
