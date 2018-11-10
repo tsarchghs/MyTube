@@ -1,6 +1,13 @@
+from rest_framework import viewsets
 from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
+from django.contrib.auth.models import User
+from django.core import serializers
+from video.models import Comment
+from .serializers import CommentSerializer,UserProfileSerializer,UserSerializer,VideoSerializer
+from user_profile.models import UserProfile
+from video.models import Video
 
 # Create your views here.
 
@@ -18,3 +25,12 @@ class ValidateCredentials(APIView):
 		else:
 			content = {"valid_credentials":False}
 		return Response(content)
+
+class ViewVideos(viewsets.ModelViewSet):
+	queryset = Video.objects.all()
+	serializer_class = VideoSerializer
+	
+class ViewUsers(viewsets.ModelViewSet):
+	queryset = User.objects.all()
+	serializer_class = UserSerializer
+
