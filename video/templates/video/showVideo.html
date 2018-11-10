@@ -8,6 +8,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 {% load static %}
 {% block extra_head %}
 <link rel="stylesheet" type="text/css" href="{% static 'css/video/showVideo.css' %}">
+<script type="text/javascript" src="{% static 'video/showVideo_comment.js' %}"></script>
 {% endblock extra_head %}
 {% block content %}
         <div class="col-sm-3 col-md-2 sidebar">
@@ -147,7 +148,7 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 					</div>
 					<div class="all-comments">
 						<div class="all-comments-info">
-							<a href="#">All Comments ({{comment_likes|length}})</a>
+							<a href="#">All Comments (<div style="display: inline;" id="total_comments">{{comment_likes|length}}</div>)</a>
 							<div class="all-comments-buttons">
 								<ul>
 									<li><a href="#" class="top">Top Comments</a></li>
@@ -157,105 +158,108 @@ License URL: http://creativecommons.org/licenses/by/3.0/
 							</div>
 						</div>
 
-<!-- comments container -->
-		<div class="comment_block">
+				<!-- comments container -->
+						<div class="comment_block">
 
-		<!-- 
-			Comments are structured in the following way:
+						<!-- 
+							Comments are structured in the following way:
 
-			{ul} defines a new comment (singular)
-			{li} defines a new reply to the comment {ul}
+							{ul} defines a new comment (singular)
+							{li} defines a new reply to the comment {ul}
 
-			example:
+							example:
 
-			<ul>
-				<comment>
-					
-				</comment
+							<ul>
+								<comment>
+									
+								</comment
 
-					<li>
-						<reply>
+									<li>
+										<reply>
 
-						</reply>
-					</li>
+										</reply>
+									</li>
 
-					<li>
-						<reply>
+									<li>
+										<reply>
 
-						</reply>
-					</li>
+										</reply>
+									</li>
 
-					<li>
-						<reply>
+									<li>
+										<reply>
 
-						</reply>
-					</li>
-			</ul>
+										</reply>
+									</li>
+							</ul>
 
-		 -->
+						 -->
 
-		 <!-- used by #{user} to create a new comment -->
-		 <div class="create_new_comment">
+						 <!-- used by #{user} to create a new comment -->
+						 <div class="create_new_comment">
 
-			<!-- current #{user} avatar -->
-		 	<div class="user_avatar">
-		 		<img src="{{current_user_profile.photo.url}}">
-		 	</div><!-- the input field --><div class="input_comment">
-		 		<input type="text" placeholder="Say something..">
-		 	</div>
+							<!-- current #{user} avatar -->
+						 	<div class="user_avatar">
+						 		<img src="{{current_user_profile.photo.url}}">
+						 	</div><!-- the input field --><div class="input_comment">
+						 		<input id="new_comment" type="text" placeholder="Say something..">
+						 	</div>
 
-		 </div>
-
-
-		 <!-- new comment -->
-		 {% for comment,likes in comment_likes.items %}
-
-			 <div class="new_comment">
-
-				<!-- build comment -->
-			 	<ul class="user_comment">
-
-			 		<!-- current #{user} avatar --> 
-				 	<!-- start user replies -->
-			 	<li>
-			 		
-			 		<!-- current #{user} avatar -->
-				 	<div class="user_avatar">
-				 		<img src="{{comment.user_profile.photo.url}}">
-				 	</div><!-- the comment body --><div class="comment_body">
-				 		<p><div class="replied_to">{{comment.content}}!</p>
-				 	</div>
-
-				 	<!-- comments toolbar -->
-				 	<div class="comment_toolbar">
-
-				 		<!-- inc. date and time -->
-				 		<div class="comment_details">
-				 			<ul>
-				 				<li><i class="fa fa-clock-o"></i> TO:DO</li>
-				 				<li><i class="fa fa-calendar"></i> {{comment.user_profile.user.firstname}} {{comment.user_profile.user.lastname}}</li>
-				 				<li><i class="fa fa-pencil"></i> <span class="user">{{co}}</span></li>
-				 			</ul>
-				 		</div><!-- inc. share/reply and love --><div class="comment_tools">
-				 			<ul>
-				 				<li><i class="fa fa-share-alt"></i></li>
-				 				<li><i class="fa fa-reply"></i></li>
-				 				<li><i class="fa fa-heart love"><span class="love_amt"> {{likes}}</span></i></li>
-				 			</ul>
-				 		</div>
-
-				 	</div>
+						 </div>
 
 
-			 	</li>
-			{% endfor %}
+						 <div id="comments">
+							 <!-- new comment -->
+							 {% for comment,likes in comment_likes.items %}
+
+								 <div class="new_comment" id="commentId={{comment.id}}">
+
+									<!-- build comment -->
+								 	<ul class="user_comment">
+
+								 		<!-- current #{user} avatar --> 
+									 	<!-- start user replies -->
+								 	<li>
+								 		
+								 		<!-- current #{user} avatar -->
+									 	<div class="user_avatar">
+									 		<img src="{{comment.user_profile.photo.url}}">
+									 	</div><!-- the comment body --><div class="comment_body">
+									 		<p><div class="replied_to">{{comment.content}}</p>
+									 	</div>
+
+									 	<!-- comments toolbar -->
+									 	<div class="comment_toolbar">
+
+									 		<!-- inc. date and time -->
+									 		<div class="comment_details">
+									 			<ul>
+									 				<li><i class="fa fa-clock-o"></i> TO:DO</li>
+									 				<li><i class="fa fa-calendar"></i> {{comment.user_profile.user.firstname}} {{comment.user_profile.user.lastname}}</li>
+									 				<li><i class="fa fa-pencil"></i> <span class="user">{{co}}</span></li>
+									 			</ul>
+									 		</div><!-- inc. share/reply and love --><div class="comment_tools">
+									 			<ul>
+									 				<li><i class="fa fa-share-alt"></i></li>
+									 				<li><i class="fa fa-reply"></i></li>
+									 				<li><i class="fa fa-heart love"><span class="love_amt"> {{likes}}</span></i></li>
+									 			</ul>
+									 		</div>
+
+									 	</div>
 
 
-		 	</ul>
+								 	</li>
+								{% endfor %}
+							</div>
+						</div>
 
-		 </div>
 
-		</div>
+						 	</ul>
+
+						 </div>
+
+						</div>
 					</div>
 				</div>
 				<div class="col-md-4 single-right">
