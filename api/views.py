@@ -5,10 +5,10 @@ from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
 from django.core import serializers
 from video.models import Comment
-from .serializers import CommentSerializer,UserProfileSerializer,UserSerializer,VideoSerializer
+from .serializers import CommentSerializer,UserProfileSerializer,UserSerializer,VideoSerializer,ChannelSerializer
 from user_profile.models import UserProfile
 from video.models import Video
-
+from user_channel.models import Channel
 # Create your views here.
 
 class ValidateCredentials(APIView):
@@ -25,6 +25,10 @@ class ValidateCredentials(APIView):
 		else:
 			content = {"valid_credentials":False}
 		return Response(content)
+
+class ViewChannel(viewsets.ModelViewSet):
+	queryset = Channel.objects.all()
+	serializer_class = ChannelSerializer
 
 class ViewVideos(viewsets.ModelViewSet):
 	queryset = Video.objects.all()
