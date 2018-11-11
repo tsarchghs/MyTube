@@ -8,7 +8,7 @@ from video.models import Comment
 from .serializers import *
 from user_profile.models import UserProfile
 from video.models import Video,VideoLike
-from user_channel.models import Channel
+from user_channel.models import UserChannel
 from rest_framework.permissions import IsAuthenticated
 # Create your views here.
 
@@ -76,9 +76,9 @@ class LikeVideo(APIView):
 				response_json["created_dislike"] = True
 		return Response(response_json)
 
-class ViewChannels(viewsets.ModelViewSet):
-	queryset = Channel.objects.all()
-	serializer_class = ChannelSerializer
+class ViewUserChannels(viewsets.ModelViewSet):
+	queryset = UserChannel.objects.all()
+	serializer_class = UserChannelSerializer
 
 class ViewVideos(viewsets.ModelViewSet):
 	queryset = Video.objects.all()

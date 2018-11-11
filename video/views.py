@@ -1,5 +1,5 @@
 from django.shortcuts import render,redirect,reverse,get_object_or_404
-from user_channel.models import Channel
+from user_channel.models import UserChannel
 from .models import Video,VideoLike,Comment,CommentLike,UserView,AnonymousView
 from .forms import VideoForm,CommentForm
 from django.contrib.auth.decorators import login_required
@@ -51,14 +51,14 @@ def showVideo(request,video_id):
 @login_required
 def createVideo(request):
 	current_user = request.user
-	user_channel = Channel.objects.filter(user=current_user)
+	user_channel = UserChannel.objects.filter(user=current_user)
 	if user_channel:
-		user_channel = Channel.objects.get(user=current_user)
+		user_channel = UserChannel.objects.get(user=current_user)
 		if request.method == "POST":
 			form = VideoForm(request.POST,request.FILES)
 			if form.is_valid():
 				video = form.save(commit=False)
-				video.channel = user_channel
+				video.user_channel = user_channel
 				video.save()
 				return redirect(reverse("createVideo"))
 			else:
@@ -73,7 +73,7 @@ def createVideo(request):
 def editVideo(request,video_id):
 	current_user = request.user
 	video = Video.objects.get(pk=video_id)
-	if video.channel.user == current_user:
+	if video.user_channel.user == current_user:
 		if request.method == "POST":
 			form = VideoForm(request.POST,request.FILES,instance=video)
 			if form.is_valid():
@@ -92,7 +92,7 @@ def editVideo(request,video_id):
 def deleteVideo(request,video_id):
 	current_user = request.user
 	video = get_object_or_404(Video,pk=video_id)
-	if video.channel.user == current_user:
+	if video.user_channel.user == current_user:
 		if request.method == "POST":
 			video.delete()
 			return redirect("/video/")

@@ -1,5 +1,5 @@
 from django.db import models
-from user_channel.models import Channel
+from user_channel.models import UserChannel
 from django.contrib.auth.models import User
 from django.core.validators import FileExtensionValidator
 from user_profile.models import UserProfile
@@ -14,7 +14,7 @@ def get_extensions_for_type(general_type):
 VIDEO = tuple(get_extensions_for_type('video'))
 
 class Video(models.Model):
-	channel = models.ForeignKey(Channel,on_delete=models.CASCADE)
+	channel = models.ForeignKey(UserChannel,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 	video_file = models.FileField(upload_to="videos",

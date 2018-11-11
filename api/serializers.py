@@ -3,11 +3,11 @@ from video.models import Comment
 from user_profile.models import UserProfile
 from django.contrib.auth.models import User
 from video.models import Video
-from user_channel.models import Channel
+from user_channel.models import UserChannel
 
-class ChannelSerializer(serializers.HyperlinkedModelSerializer):
+class UserChannelSerializer(serializers.HyperlinkedModelSerializer):
 	class Meta:
-		model = Channel
+		model = UserChannel
 		exclude = []
 
 class VideoSerializer(serializers.HyperlinkedModelSerializer):
