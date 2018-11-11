@@ -37,7 +37,9 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 </head>
 <body>
 	<input type="hidden" id="authenticated" value="{{ user.is_authenticated }}">
-	<input type="hidden" id="userProfile_id" value="{{ user.id|getProfile}}">
+	{% if user.is_authenticated %}
+		<input type="hidden" id="userProfile_id" value="{{ user.id|getProfile}}">
+	{% endif %}
     <nav class="navbar navbar-inverse navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
