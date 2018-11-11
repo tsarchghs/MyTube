@@ -32,11 +32,22 @@ function like(type_){
 
 window.onload = function(){
 	document.getElementById("like_a").onclick = () => {
-		like("like");
+		authenticated = document.getElementById("authenticated").value;
+		console.log(authenticated);
+		if (authenticated == "True"){
+			like("like");
+		} else {
+			document.getElementById("signin_popup_button").click();
+		}
 		return false;
 	}
 	document.getElementById("dislike_a").onclick = () =>{
-		like("dislike");
+		authenticated = document.getElementById("authenticated").value;
+		if (authenticated == "True"){
+			like("dislike");
+		} else {
+			document.getElementById("signin_popup_button").click();
+		}		
 		return false;
 	}
 }
