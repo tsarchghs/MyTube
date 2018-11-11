@@ -35,6 +35,32 @@ function login(){
 				},
 				body: formData
 			}).then(function(response){
+				fetch("http://localhost:8000/api/get_current_user_profile/?format=json",{
+					method: "GET",
+					headers: {
+						"Accept": "application/json",
+						"Content-Type":"application/json"
+					}
+				}).then(function(response){
+					return response.json();
+				}).then(function(json){
+					json_ = JSON.parse(json);
+					profile = json_[0];
+					userProfile_info = document.getElementById("userProfile_info");
+					userProfile_id = document.getElementById("userProfile_id")
+					console.log(profile);
+					if (userProfile_id){
+						userProfile_id.value = profile.pk;
+					} else {
+						userProfile_id = document.createElement("input");
+						userProfile_id.type = "hidden";
+						userProfile_id.id = "userProfile_id";
+						userProfile_id.value = profile.pk;
+						console.log(profile.pk);
+						userProfile_info.appendChild(userProfile_id);
+					}
+				})
+			}).then(function(response){
 				document.getElementById("authenticated").value = "True";
 				login_alert.innerHTML = "";
 				document.getElementById("register_div").style.display = "none";
