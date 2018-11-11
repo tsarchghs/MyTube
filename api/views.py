@@ -3,7 +3,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.contrib.auth import authenticate
 from django.contrib.auth.models import User
-from django.core import serializers
+from django.core import serializers as django_serializers
 from video.models import Comment
 from .serializers import *
 from user_profile.models import UserProfile
@@ -26,6 +26,13 @@ class ValidateCredentials(APIView):
 		else:
 			content = {"valid_credentials":False}
 		return Response(content)
+
+class GetCurrentUserProfile(APIView):
+	permission_classes = [IsAuthenticated]
+	def get(self,request):
+		profile = UserProfile.objects.filter(user=request.user)
+		json_ = django_serializers.serialize("json",profile)
+		return Response(json_)
 
 class LikeVideo(APIView):
 	permission_classes = [IsAuthenticated]
