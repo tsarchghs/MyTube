@@ -14,4 +14,5 @@ urlpatterns = [
 	path("validate_credentials/",views.ValidateCredentials.as_view(),name="validate_credentials"),
 	path("like_video/",views.LikeVideo.as_view(),name="like_video"),
 	path("get_current_user_profile/",views.GetCurrentUserProfile.as_view(),name="get_current_user_profile"),
+	path("filter_comments/<int:video_id>/<int:from_>/<int:to_>",views.FilterComments.as_view(),name="filter_comments"),
 ]
