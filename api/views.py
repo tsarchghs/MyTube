@@ -34,6 +34,16 @@ class GetCurrentUserProfile(APIView):
 		json_ = django_serializers.serialize("json",profile)
 		return Response(json_)
 
+class FilterComments(APIView):
+	permission_classes = []
+	def get(self,request,video_id,from_,to_):
+		video = Video.objects.filter(pk=video_id)
+		if not video:
+			return Response({"Video not found with id: {}".format(video_id)})
+		comments = Comment.objects.filter(video=video[0]).order_by("-id")
+		json_ = django_serializers.serialize("json",comments[from_:to_])
+		return Response(json_)
+
 class LikeVideo(APIView):
 	permission_classes = [IsAuthenticated]
 	def post(self,request):
