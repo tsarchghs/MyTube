@@ -13,6 +13,7 @@ window.onload = function(e){
 	}
 	if (document.getElementById("video_id")){
 		addComments(comments_count,comments_count+5);
+		comments_count += 5;
 	}
 	document.getElementById("like_a").onclick = () => {
 		authenticated = document.getElementById("authenticated").value;
