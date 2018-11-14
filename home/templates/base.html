@@ -24,7 +24,6 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <script src="{% static 'js/jquery-1.11.1.min.js' %}"></script>
 <script src="https://cdn.jsdelivr.net/npm/js-cookie@2/src/js.cookie.min.js"></script>
 <script src="{% static 'auth/login.js' %}"></script>
-<script src="{% static 'main.js' %}"></script>
 <link rel='stylesheet prefetch' href='http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css'>
 
 <!--start-smoth-scrolling-->
@@ -34,6 +33,7 @@ Smartphone Compatible web template, free webdesigns for Nokia, Samsung, LG, Sony
 <!-- //fonts -->
 {% block extra_head %}
 {% endblock extra_head %}
+<script src="{% static 'main.js' %}"></script>
 </head>
 <body>
 	<input type="hidden" id="authenticated" value="{{ user.is_authenticated }}">
