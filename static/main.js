@@ -1,4 +1,8 @@
 
+
+var comments_count = 0;
+
+
 window.onload = function(e){
 	console.log(e);
 	authenticated_value = document.getElementById("authenticated").value;
@@ -6,6 +10,28 @@ window.onload = function(e){
 	login_form = document.getElementById("login_form");
 	if (login_button != null){
 		login_button.onclick = login;
+	}
+	if (document.getElementById("video_id")){
+		addComments(comments_count,comments_count+5);
+	}
+	document.getElementById("like_a").onclick = () => {
+		authenticated = document.getElementById("authenticated").value;
+		console.log(authenticated);
+		if (authenticated == "True"){
+			like("like");
+		} else {
+			document.getElementById("signin_popup_button").click();
+		}
+		return false;
+	}
+	document.getElementById("dislike_a").onclick = () =>{
+		authenticated = document.getElementById("authenticated").value;
+		if (authenticated == "True"){
+			like("dislike");
+		} else {
+			document.getElementById("signin_popup_button").click();
+		}		
+		return false;
 	}
 }
 
