@@ -1,4 +1,22 @@
 
+function addComments(from_,to_){
+	csrftoken = Cookies.get("csrftoken");
+	video_id = document.getElementById("video_id").value;
+	fetch(`/api/filter_comments/${video_id}/${from_}/${to_}?format=json`,{
+		method: "GET",
+		headers: {
+			"Accept": "application/json",
+			"Content-Type": "application/json",
+			"X-CSRFToken": csrftoken
+		}
+	}).then(function (response){
+		return response.json();
+	}).then(function (json){
+		console.log(json);
+		//comments_count += to_ - from_;
+		//comments_count += 5;
+	})
+}
 
 window.addEventListener("keyup", (event) => {
 	if (event.key == "Enter") {
