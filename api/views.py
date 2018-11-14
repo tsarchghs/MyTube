@@ -10,6 +10,8 @@ from user_profile.models import UserProfile
 from video.models import Video,VideoLike
 from user_channel.models import UserChannel
 from rest_framework.permissions import IsAuthenticated
+import ast
+import json
 # Create your views here.
 
 class ValidateCredentials(APIView):
@@ -42,7 +44,11 @@ class FilterComments(APIView):
 			return Response({"Video not found with id: {}".format(video_id)})
 		comments = Comment.objects.filter(video=video[0]).order_by("-id")
 		json_ = django_serializers.serialize("json",comments[from_:to_])
-		return Response(json_)
+		json_list = ast.literal_eval(json_)
+		for comment in json_list:
+			user_profile = UserProfile.objects.get(pk=comment["fields"]["user_profile"])
+			comment["fields"]["user_profile"] = django_serializers.serialize("json",[user_profile])
+		return Response(json.dumps(json_list))
 
 class LikeVideo(APIView):
 	permission_classes = [IsAuthenticated]
