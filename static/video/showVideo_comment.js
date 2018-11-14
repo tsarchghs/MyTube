@@ -12,7 +12,12 @@ function addComments(from_,to_){
 	}).then(function (response){
 		return response.json();
 	}).then(function (json){
-		console.log(json);
+		var comments = JSON.parse(json);
+		for (var comment in comments){
+			user_profile = comments[comment]["fields"]["user_profile"];
+			comments[comment]["fields"]["user_profile"] = JSON.parse(user_profile);
+		}
+		console.log(comments);
 		//comments_count += to_ - from_;
 		//comments_count += 5;
 	})
