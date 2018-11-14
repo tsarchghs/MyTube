@@ -12,12 +12,20 @@ function addComments(from_,to_){
 	}).then(function (response){
 		return response.json();
 	}).then(function (json){
+		var comments_div = document.getElementById("comments");
 		var comments = JSON.parse(json);
-		for (var comment in comments){
-			user_profile = comments[comment]["fields"]["user_profile"];
-			comments[comment]["fields"]["user_profile"] = JSON.parse(user_profile);
+		for (var comm in comments){
+			comment = comments[comm]["fields"];
+			user_profile = comment["user_profile"];
+			comment["user_profile"] = JSON.parse(user_profile)[0];
+			console.log(comment);
+			comment_html = htmlComment(comm["pk"],comment["content"],
+									    comment["user_profile"]["fields"]["photo"],
+									    "Firstname","Lastname",0,
+									    before_photo_url="/static/media_files/");
+			insertComment(comments_div,comment_html,below_div=true);
+
 		}
-		console.log(comments);
 		//comments_count += to_ - from_;
 		//comments_count += 5;
 	})
@@ -78,11 +86,16 @@ window.addEventListener("keyup", (event) => {
 })
 
 
-function insertComment(div,html){
-	div.innerHTML = html + div.innerHTML;
+function insertComment(div,html,below_div=false){
+	if (!below_div){
+		div.innerHTML = html + div.innerHTML;
+	} else {
+		div.innerHTML = div.innerHTML + html;
+
+	}
 }
 
-function htmlComment(id,content,photo_url,firstname,lastname,likes){
+function htmlComment(id,content,photo_url,firstname,lastname,likes,before_photo_url=""){
 	return commentHTML = `
 	 <div class="new_comment" id="commentId=${id}">
 
@@ -95,7 +108,7 @@ function htmlComment(id,content,photo_url,firstname,lastname,likes){
 									 		
 									 		<!-- current #{user} avatar -->
 										 	<div class="user_avatar">
-										 		<img src="${photo_url}">
+										 		<img src="${before_photo_url}${photo_url}">
 										 	</div><!-- the comment body --><div class="comment_body">
 										 		<p><div class="replied_to">${content}</p>
 										 	</div>
