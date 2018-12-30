@@ -6,6 +6,7 @@ router = routers.DefaultRouter()
 router.register("users",views.UsersViewSet)
 router.register("user_profiles",views.UserProfilesViewSet)
 router.register("user_channels",views.UserChannelsViewSet)
+router.register("category",views.CategoriesViewSet)
 router.register("videos",views.VideosViewSet)
 router.register("comments",views.CommentsViewSet)
 
