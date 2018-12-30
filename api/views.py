@@ -92,22 +92,22 @@ class LikeVideo(APIView):
 				response_json["created_dislike"] = True
 		return Response(response_json)
 
-class ViewUserChannels(viewsets.ModelViewSet):
+class UserChannelsViewSet(viewsets.ModelViewSet):
 	queryset = UserChannel.objects.all()
 	serializer_class = UserChannelSerializer
 
-class ViewVideos(viewsets.ModelViewSet):
+class VideosViewSet(viewsets.ModelViewSet):
 	queryset = Video.objects.all()
 	serializer_class = VideoSerializer
 	
-class ViewUsers(viewsets.ModelViewSet):
+class UsersViewSet(viewsets.ModelViewSet):
 	queryset = User.objects.all()
 	serializer_class = UserSerializer
 
-class ViewUserProfiles(viewsets.ModelViewSet):
+class UserProfilesViewSet(viewsets.ModelViewSet):
 	queryset = UserProfile.objects.all()
 	serializer_class = UserProfileSerializer
 
-class ViewComments(viewsets.ModelViewSet):
+class CommentsViewSet(viewsets.ModelViewSet):
 	queryset = Comment.objects.all()
 	serializer_class = CommentSerializer
