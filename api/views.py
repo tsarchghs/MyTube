@@ -111,3 +111,7 @@ class UserProfilesViewSet(viewsets.ModelViewSet):
 class CommentsViewSet(viewsets.ModelViewSet):
 	queryset = Comment.objects.all()
 	serializer_class = CommentSerializer
+
+class CategoriesViewSet(viewsets.ModelViewSet):
+	queryset = Category.objects.all()
+	serializer_class = CategorySerializer
