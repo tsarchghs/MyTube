@@ -9,15 +9,7 @@ from user_profile.models import UserProfile
 # Create your views here.
 
 def index(request):
-	video_views = {}
-	videos = Video.objects.all()
-	for video in videos:
-		anonViews = len(AnonymousView.objects.filter(video=video))
-		userViews = len(UserView.objects.filter(video=video))
-		video_views[video] = anonViews + userViews
-	context = {"video_views":video_views}
-	return render(request,"video/index.html",context)
-
+	return render(request,"video/index.html",{})
 
 def showVideo(request,video_id):
 	user_agent = request.META['HTTP_USER_AGENT']
