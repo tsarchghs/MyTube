@@ -64,3 +64,7 @@ class AnonymousView(models.Model):
 	video = models.ForeignKey(Video,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 
+class Category(models.Model):
+	name = models.CharField(max_length=100)
+	def __str__(self):
+		return f"{self.id} - {self.name}"
