@@ -13,8 +13,14 @@ def get_extensions_for_type(general_type):
 
 VIDEO = tuple(get_extensions_for_type('video'))
 
+class Category(models.Model):
+	name = models.CharField(max_length=100)
+	def __str__(self):
+		return f"{self.id} - {self.name}"
+
 class Video(models.Model):
 	channel = models.ForeignKey(UserChannel,on_delete=models.CASCADE)
+	category = models.ForeignKey(Category,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 	modified = models.DateTimeField(auto_now=True)
 	video_file = models.FileField(upload_to="videos",
@@ -64,7 +70,3 @@ class AnonymousView(models.Model):
 	video = models.ForeignKey(Video,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
 
-class Category(models.Model):
-	name = models.CharField(max_length=100)
-	def __str__(self):
-		return f"{self.id} - {self.name}"
