@@ -19,6 +19,7 @@ class Video(models.Model):
 	modified = models.DateTimeField(auto_now=True)
 	video_file = models.FileField(upload_to="videos",
 		validators=[FileExtensionValidator(allowed_extensions=VIDEO)])
+	thumbnail = models.ImageField(upload_to="thumbnails")
 	title = models.CharField(max_length=300)
 	description = models.TextField()
 
@@ -62,3 +63,4 @@ class AnonymousView(models.Model):
 	browser = models.TextField()
 	video = models.ForeignKey(Video,on_delete=models.CASCADE)
 	created = models.DateTimeField(auto_now_add=True)
+
